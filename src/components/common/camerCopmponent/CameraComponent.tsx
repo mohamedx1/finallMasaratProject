@@ -75,7 +75,7 @@ const VideoCapture: React.FC = () => {
       if (capturedImage && token) {
         dispatch(sendCapturedImage({ base64String: capturedImage, token }));
       }
-    }, 10000); // Capture every 10 seconds
+    }, 1000); // Capture every 10 seconds
     setIntervalId(id);
   };
 

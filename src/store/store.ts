@@ -10,6 +10,7 @@ import toggleModal from "./modalCollaps/ModalCollapseSlice";
 import cameraAcsessSlise from './camerAcess/CamerAcsess';
 import sendImageSlice from './sendImage/sendImageSlice';
 import aiChatSlice from './chattWithAi/chattAiSlice';
+import userDataSlice from './getUSerData/getUserDatSlice';
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     userState: sendImageSlice,
     aiResonse: aiChatSlice,
     chat: chatReducer,
+    userData:userDataSlice,
   },
 });
 

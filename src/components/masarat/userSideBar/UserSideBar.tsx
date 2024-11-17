@@ -10,21 +10,15 @@ export default function UserSideBar() {
 
   return (
     <>
-      <div
-        className={
-          isExpended
-            ? " transition-all duration-300 ease-in-out shadow-md"
-            : "transition-all duration-300 ease-in-out shadow-lg  "
-        }
-      >
+      <div className={isExpended ? "  shadow-md " : " shadow-lg  "}>
         <div
           className={
             isExpended
-              ? "h-screen p-4 flex flex-col justify-between  w-72   transition-all duration-300 ease-in-out"
-              : "h-screen p-2 flex flex-col justify-between w-fit align-middle   "
+              ? "fixed h-full p-4 flex flex-col justify-between  w-72 ml-10      z-50 bg-white"
+              : "fixed h-full p-2 flex flex-col justify-between w-fit  align-middle bg-white  "
           }
         >
-          <div>
+          <div className=''>
             <SideNav />
             <UserInfo />
             <Subjects />

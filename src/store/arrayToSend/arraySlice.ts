@@ -34,7 +34,7 @@ const chatSlice = createSlice({
             // Add a new entry for the next question, if there's a next question
             if (currentMessage < content?.length) {
                 const nextQuestion = content?.[currentMessage + 1];
-                updatedChat.push({ ...nextQuestion, student_answer: "" });
+                updatedChat.push({ ...nextQuestion });
             }
 
             state.sendedChat = updatedChat;

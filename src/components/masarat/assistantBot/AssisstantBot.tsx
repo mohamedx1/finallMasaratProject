@@ -13,6 +13,7 @@ export default function AssisstantBot() {
   const [consecutiveUnavailable, setConsecutiveUnavailable] = useState(false);
   const [isConcentrated, setIsConcentrated] = useState(true);
   const { userStatues } = useAppSelector((state) => state.userState);
+  const { audioIsOpend } = useAppSelector((state) => state.togegleModal);
 
   useEffect(() => {
     if (userStatues) {
@@ -21,7 +22,7 @@ export default function AssisstantBot() {
         console.log(updatedResponses);
 
         // Check every four responses
-        if (updatedResponses.length >= 4) {
+        if (updatedResponses.length >= 15) {
           // Calculate unavailability majority across all responses
           const unavailableCount = updatedResponses.filter(
             (res) => res.emotion === "Not-Attentive (student unavailable)"
@@ -32,15 +33,16 @@ export default function AssisstantBot() {
           ).length;
 
           // Determine majority of unavailability across the last 4 responses
-          if (unavailableCount >= 3) {
+          if (unavailableCount >= 8) {
             setConsecutiveUnavailable(true);
-            setIsConcentrated(false); // Reset concentration state if unavailable
-          } else {
-            setConsecutiveUnavailable(false);
+          } else if (concentratedCount >= 7) {
             // Determine majority concentration across the last 4 responses
-            setIsConcentrated(concentratedCount >= 2);
+            setIsConcentrated(true);
+            setConsecutiveUnavailable(false);
+          } else if (concentratedCount <= 7) {
+            setIsConcentrated(false);
+            setConsecutiveUnavailable(false);
           }
-
           // Clear the array after processing every 4 responses
           return [];
         }
@@ -50,18 +52,22 @@ export default function AssisstantBot() {
     }
   }, [userStatues]);
 
-  const playAudio = (src: any) => {
-    const audio = new Audio(src);
-    audio.play().catch((error) => {
-      console.error("Audio playback failed:", error);
-    });
-  };
-
   useEffect(() => {
-    if (consecutiveUnavailable) {
-      playAudio(require("../../../../src/audio/unavilable.mp3"));
-    } else if (!isConcentrated) {
-      playAudio(require("../../../../src/audio/notConcentrated.mp3"));
+    if (consecutiveUnavailable && audioIsOpend) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(
+        " يبدو أن الكاميرا تواجه مشكلة في قراءة تعابير الوجه. هل يمكك التحقق منها؟"
+      );
+
+      utterance.lang = "ar"; // Set language to Arabic
+      window.speechSynthesis.speak(utterance);
+    } else if (!isConcentrated && audioIsOpend) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(
+        "اتضح لى انك غير منتبه ، أنصحك بالتركيز و الانتباه"
+      );
+      utterance.lang = "ar"; // Set language to Arabic
+      window.speechSynthesis.speak(utterance);
     } else {
     }
   }, [isConcentrated, consecutiveUnavailable]);
@@ -78,7 +84,7 @@ export default function AssisstantBot() {
       </div>
       <div className={`absolute top-0 left-40 p-2 w-60 shadow-lg bg-white `}>
         <span className='text-gray-700'>المساعد الآلي</span>
-        <div className='text-center text-gray-500'>
+        <div className='text-center text-gray-500 flex flex-col'>
           {consecutiveUnavailable ? (
             <>
               يبدو أن الكاميرا تواجه مشكلة في قراءة تعابير الوجه. هل يمكنك
@@ -96,8 +102,6 @@ export default function AssisstantBot() {
             <button
               onClick={() => {
                 setAllResponseArray([
-                  { is_concentrated: 1, emotion: "neutral" },
-                  { is_concentrated: 1, emotion: "neutral" },
                   { is_concentrated: 1, emotion: "neutral" },
                 ]);
                 setIsConcentrated(true); // Reset to concentrated

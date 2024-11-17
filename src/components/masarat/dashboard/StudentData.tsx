@@ -18,32 +18,32 @@ export default function StudentData({ charts }: any) {
     total_time_per_phase: [
       {
         name: "تمهيد",
-        value: charts?.total_time_per_phase?.GREETING || "No progress recorded",
+        value: charts?.total_time_per_phase?.GREETING,
         color: "#704FE6",
       },
       {
         name: "اختبار مبدأي",
-        value: charts.total_time_per_phase.INTRO_EXAM || "No progress recorded",
+        value: charts?.total_time_per_phase?.INTRO_EXAM,
         color: "#9B84EE",
       },
       {
         name: "فديوهات",
-        value: charts?.total_time_per_phase?.INTRO_CONTENT || 0,
+        value: charts?.total_time_per_phase?.INTRO_CONTENT,
         color: "#DEC8FE",
       },
       {
         name: "شرح",
-        value: charts?.total_time_per_phase?.CONCEPTUAL_EXAM || 0,
+        value: charts?.total_time_per_phase?.EXPLANATION_CONTENT,
         color: "#704FE6",
       },
       {
         name: "مفاهيم سابقه",
-        value: charts?.total_time_per_phase?.GREETING,
+        value: charts?.total_time_per_phase?.PREVIOUS_CONTENT_CONTENT,
         color: "#9B84EE",
       },
       {
         name: "أمثله تطبيقيه",
-        value: charts?.total_time_per_phase?.GREETING,
+        value: charts?.total_time_per_phase?.PRACTICE_VIDEOS_CONTENT,
         color: "#DEC8FE",
       },
     ],

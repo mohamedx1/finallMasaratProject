@@ -5,10 +5,12 @@ import logo from "../../../../images/smallLogo.svg";
 import { PanelLeft } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { toggleCollapse } from "../../../../store/sidebarCollaps/sidebarSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function SideNav() {
   const { isExpended } = useAppSelector((state) => state.sideBar);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const handleClick = () => {
     dispatch(toggleCollapse());
   };
@@ -20,26 +22,28 @@ export default function SideNav() {
           : "flex flex-col-reverse justify-center items-center  mb-4 "
       }
     >
-      <div className='w-1/2 '>
+      <div className=' '>
         {isExpended ? (
           <img
-            className='transition-all duration-300 ease-in-out'
+            className='  cursor-pointer w-32'
             src={Mainlogo}
             alt='logo'
+            onClick={() => {
+              navigate("/masarat/home");
+            }}
           />
         ) : (
           <img
-            className='transition-all duration-300 ease-in-out'
+            className=' cursor-pointer w-6 '
             src={logo}
             alt='logo'
+            onClick={() => {
+              navigate("/masarat/home");
+            }}
           />
         )}
       </div>
-      <div
-        className={
-          isExpended ? "transition-all duration-300 ease-in-out" : "mb-2"
-        }
-      >
+      <div className={isExpended ? " " : "mb-2"}>
         <Mainbutn
           pading={"p-1"}
           bg={"bg-white"}

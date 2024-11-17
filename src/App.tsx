@@ -9,41 +9,65 @@ import store from "./store/store";
 import OnBording from "./components/masarat/onBording/OnBording";
 import axios from "axios";
 import Dashboard from "./components/masarat/dashboard/Dashboard";
+import Login from "./components/login/Login";
+import ChooseLearningMethod from "./components/survay/ChooseLearningMethod";
+import Priorities from "./components/survay/Priorities";
+import Gard from "./components/Gard/Gard";
+import { Helmet } from "react-helmet";
+import logo from "../src/images/smallLogo.svg";
 
 function App() {
-  const data = {
-    username: "newuser",
-    password: "password123",
-  };
-
-  async function login() {
-    try {
-
-      const response = await axios.post<any>(
-        "http://127.0.0.1:8000/users/login/",
-        data
-      );
-      console.log(response);
-      localStorage.setItem("token", response.data.access);
-    } catch (err) {
-      return <>لديك مشكلة في الإنترنت</>
-    }
-  }
-
-  useEffect(() => {
-    login();
-  }, []);
   const mainRouter = createBrowserRouter([
-    // { path: "/", element: <VideoCapture /> },
-    { path: "/", element: <OnBording /> },
-    { path: "/masarat/dashboard", element: <Dashboard /> },
+    // { path: "/", element:  },
+
+    { path: "/", element: <Login /> },
+    {
+      path: "/masarat/OnBording",
+      element: (
+        <Gard>
+          <OnBording />
+        </Gard>
+      ),
+    },
     {
       path: "/masarat",
-      element: <MainLayout />,
+      element: (
+        <Gard>
+          <MainLayout />
+        </Gard>
+      ),
       children: [
         {
+          path: "/masarat/survay",
+          element: (
+            <Gard>
+              <ChooseLearningMethod />
+            </Gard>
+          ),
+        },
+        {
+          path: "/masarat/survay/priorities",
+          element: (
+            <Gard>
+              <Priorities />
+            </Gard>
+          ),
+        },
+        {
           path: "/masarat/home",
-          element: <Home />,
+          element: (
+            <Gard>
+              <Home />
+            </Gard>
+          ),
+        },
+        {
+          path: "/masarat/dashboard",
+          element: (
+            <Gard>
+              <Dashboard />
+            </Gard>
+          ),
         },
       ],
     },

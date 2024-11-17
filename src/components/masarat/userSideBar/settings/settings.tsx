@@ -6,17 +6,21 @@ import {
   Clipboard,
   LogOut,
   Play,
+  VolumeOff,
+  Volume2,
 } from "lucide-react";
 import Mainbutn from "./../../../common/buttons/Mainbutn";
 import CustomSlider from "./../../../common/slider/CustomSlider";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-import { toggleModal } from "../../../../store/modalCollaps/ModalCollapseSlice";
 import { changeAcess } from "../../../../store/camerAcess/CamerAcsess";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toggleaudio } from "../../../../store/modalCollaps/ModalCollapseSlice";
 
 export default function Settings() {
   const dispatch = useAppDispatch();
   const [sliderValue, setSliderValue] = useState(80);
+  const { audioIsOpend } = useAppSelector((state) => state.togegleModal);
+
   const { isExpended } = useAppSelector((state) => state.sideBar);
   const { camerIsAcsessable } = useAppSelector((state) => state.cameraAcsess);
   const navigate = useNavigate();
@@ -29,11 +33,6 @@ export default function Settings() {
   };
   // Custom styles
 
-  const handleValueChange = (newValue: number) => {
-    setSliderValue(newValue);
-    console.log("Slider value changed:", newValue);
-    // You can perform additional actions here, like making an API call
-  };
   return (
     <div className={`mt-4 ${isExpended ? "" : "mx-auto"} `}>
       <div className={`flex  mt-2 ${isExpended ? "gap-4" : "items-center"}`}>
@@ -65,9 +64,12 @@ export default function Settings() {
             hvr={"hover:bg-primary-300 hover:text-white"}
             border={"border-primary-100  border shadow-md"}
             text={"text-primary-300"}
-            // onClick={() => { audio.pause }}
+            onClick={() => {
+              window.speechSynthesis.cancel();
+              dispatch(toggleaudio());
+            }}
           >
-            <Volume1 />
+            {audioIsOpend ? <Volume2 /> : <VolumeOff />}
           </Mainbutn>
         </div>
         <div className=''>
@@ -110,6 +112,10 @@ export default function Settings() {
           hvr={"hover:bg-primary-300 hover:text-white"}
           border={"border-primary-100  border shadow-md"}
           text={"text-primary-300"}
+          onClick={() => {
+            navigate("/");
+            localStorage.removeItem("token");
+          }}
         >
           <LogOut />
         </Mainbutn>
@@ -121,20 +127,6 @@ export default function Settings() {
           }
         >
           تسجيل الخروج
-        </div>
-      </div>
-      <div className={`flex  mt-2 ${isExpended ? "gap-4" : "items-center"}`}>
-        <Mainbutn
-          pading={"p-1"}
-          bg={"bg-white"}
-          hvr={"hover:bg-primary-300 hover:text-white"}
-          border={"border-primary-100  border shadow-md"}
-          text={"text-primary-300"}
-        >
-          <Play />
-        </Mainbutn>
-        <div className={isExpended ? "text-gray-700" : "w-0 overflow-hidden "}>
-          خذ جولة
         </div>
       </div>
     </div>

@@ -19,7 +19,6 @@ import VideoCapture from "../../../common/camerCopmponent/CameraComponent";
 import { toggleModal } from "../../../../store/modalCollaps/ModalCollapseSlice";
 import { changeAcess } from "../../../../store/camerAcess/CamerAcsess";
 import Modal from "../../../common/modal/Modal";
-import { Discuss } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 type Message = {
   [x: string]: any;
@@ -60,7 +59,9 @@ export default function ChatComponent() {
   );
   const sendedChat = useSelector((state: RootState) => state.chat.sendedChat);
   const { camerIsAcsessable } = useAppSelector((state) => state.cameraAcsess);
-  const { ModalIsOpend } = useAppSelector((state) => state.togegleModal);
+  const { ModalIsOpend, audioIsOpend } = useAppSelector(
+    (state) => state.togegleModal
+  );
 
   useEffect(() => {
     dispatch(getRestoreChat(token));
@@ -84,7 +85,6 @@ export default function ChatComponent() {
     return () => {
       // Ensure content is not empty and the first element has an id or question_text
       if (content && content?.[0]?.id && content?.[0]?.question_text) {
-        // Dispatch the action with the updated content
         dispatch(
           getMainChat({
             token,
@@ -182,22 +182,20 @@ export default function ChatComponent() {
   useEffect(() => {
     if (aiResponse && aiResponse.answer) {
       // Add the aiResponse to chat states
-      setAllChat((prev: any) => [...prev, aiResponse]);
+
+      setAllChat((prev: any) => [...prev, { answer: aiResponse.answer }]);
       // setSendChat((prev) => [...prev, aiResponse]);
       dispatch(arrayToSend([aiResponse]));
       // Check if there’s a Base64 audio string and play it
-      if (aiResponse?.audio_base64) {
-        // Convert Base64 audio to a playable URL
-        const audioSrc = `data:audio/wav;base64,${aiResponse.audio_base64}`;
 
-        // Create an audio element and play the audio
-        const audio = new Audio(audioSrc);
-        audio.play().catch((error) => {
-          console.error("Audio playback failed:", error);
-          // {}
-        });
+      if (audioIsOpend) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(aiResponse.answer);
+        utterance.lang = "ar"; // Set language to Arabic
+        window.speechSynthesis.speak(utterance);
       }
     }
+    console.log(aiResponse);
   }, [aiResponse]);
 
   const handleSendMessage = () => {
@@ -447,7 +445,7 @@ export default function ChatComponent() {
               (msg?.content?.student_answer !== undefined &&
                 msg?.content?.student_answer !== "") ||
               (msg?.question && !msg?.audio_base64) ||
-              (msg?.content?.question && !msg?.content?.audio_base64) ? (
+              (msg?.content?.question && !msg?.content?.answer) ? (
                 <div className='flex justify-end'>
                   <div className='w-fit bg-primary-300 text-white max-w-xs md:max-w-md px-4 py-2 rounded-lg'>
                     {typeof (
@@ -530,20 +528,7 @@ export default function ChatComponent() {
               onClick={start}
               disabled={sendingLoading === "pending"}
             >
-              {sendingLoading === "pending" ? (
-                <Discuss
-                  visible={true}
-                  height='25'
-                  width='25'
-                  ariaLabel='discuss-loading'
-                  wrapperStyle={{}}
-                  wrapperClass='discuss-wrapper'
-                  color=''
-                  backgroundColor=''
-                />
-              ) : (
-                "التالي"
-              )}
+              {sendingLoading === "pending" ? <span>loading..</span> : "التالي"}
             </button>
           ) : (
             ""
@@ -556,20 +541,7 @@ export default function ChatComponent() {
             hvr={"hover:bg-primary-200"}
             text={"text-white"}
           >
-            {aiLoading === "pending" ? (
-              <Discuss
-                visible={true}
-                height='25'
-                width='25'
-                ariaLabel='discuss-loading'
-                wrapperStyle={{}}
-                wrapperClass='discuss-wrapper'
-                color=''
-                backgroundColor=''
-              />
-            ) : (
-              <ArrowUp />
-            )}
+            {aiLoading === "pending" ? <span>loading..</span> : <ArrowUp />}
           </MainButton>
         </div>
       </div>

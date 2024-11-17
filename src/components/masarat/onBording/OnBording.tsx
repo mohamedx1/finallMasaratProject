@@ -100,7 +100,7 @@ export default function OnBording() {
                 التالي
               </button>
               <div className='text-primary-300 p-2 cursor-pointer mt-auto z-20 border-primary-300  border rounded-lg'>
-                <Link to='/masarat/home'>تخطي...</Link>
+                <Link to='/masarat/survay'>تخطي...</Link>
               </div>
             </div>
           </div>
