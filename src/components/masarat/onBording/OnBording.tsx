@@ -1,8 +1,12 @@
 import { useRef } from "react";
-import logo from "../../../images/onBoadingLogo.svg";
 import Slider from "react-slick";
 import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
+import logo from "../../../images/onBoadingLogo.svg";
+import one from "../../../images/one.svg";
+import tow from "../../../images/tow.svg";
+import three from "../../../images/three.svg";
+import four from "../../../images/four.svg";
 
 export default function OnBording() {
   const sliderRef = useRef<Slider | null>(null);
@@ -23,9 +27,6 @@ export default function OnBording() {
   return (
     <main className='container m-auto flex justify-center items-center h-screen'>
       <section className=' w-1/2  h-fit  p-6 flex flex-col gap-6  items-center '>
-        <figure>
-          <img src={logo} alt='logo' />
-        </figure>
         <section className='w-full'>
           <div className='  text-end p-9 '>
             <Slider
@@ -35,7 +36,8 @@ export default function OnBording() {
               {...settings}
             >
               <div key={5}>
-                <h4 className='text-gray-700 text-text-lg font-semibold'>
+                <img className='mx-auto mb-4' src={four} alt='الختامي' />
+                <h4 className='text-gray-700 text-center text-text-lg font-semibold'>
                   التقويم الختامي والتقرير التشخيصي
                 </h4>
                 <p className='text-gray-600 text-text-sm font-semibold my-4'>
@@ -47,7 +49,8 @@ export default function OnBording() {
                 </p>
               </div>
               <div key={4}>
-                <h4 className='text-gray-700 text-text-lg font-semibold'>
+                <img className='mx-auto mb-4' src={three} alt='تجربة' />
+                <h4 className='text-gray-700 text-center text-text-lg font-semibold'>
                   : تجربة التعلم المخصصة للشرح والتطبيق
                 </h4>
                 <p className='text-gray-600 text-text-sm font-semibold my-4'>
@@ -60,7 +63,12 @@ export default function OnBording() {
                 </p>
               </div>
               <div key={3}>
-                <h4 className='text-gray-700 text-text-lg font-semibold'>
+                <img
+                  className='mx-auto mb-4'
+                  src={tow}
+                  alt='التقويم الاستكشافي'
+                />
+                <h4 className='text-gray-700 text-center text-text-lg font-semibold'>
                   التقويم الاستكشافي للمعرفة السابقة
                 </h4>
                 <p className='text-gray-600 text-text-sm font-semibold my-4'>
@@ -72,7 +80,8 @@ export default function OnBording() {
                 </p>
               </div>
               <div key={2}>
-                <h4 className='text-gray-700 text-text-lg font-semibold'>
+                <img className='mx-auto mb-4' src={one} alt='استطلاع' />
+                <h4 className='text-gray-700 text-center text-text-lg font-semibold'>
                   استطلاع أسلوب التعلم الخاص بك
                 </h4>
                 <p className='text-gray-600 text-text-sm font-semibold my-4'>
@@ -85,7 +94,8 @@ export default function OnBording() {
               </div>
 
               <div key={1} className='p-5'>
-                <h4 className='text-gray-700 text-text-lg font-semibold '>
+                <img className='mx-auto mb-4 w-60' src={logo} alt='logo' />
+                <h4 className='text-gray-700 text-center text-text-lg font-semibold '>
                   مرحباً بك في رحلتك التعليمية التفاعلية! في هذه الرحلة سوف تمر
                   بأربعة مراحل
                 </h4>

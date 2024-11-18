@@ -18,7 +18,7 @@ export default function StudentData({ charts }: any) {
     total_time_per_phase: [
       {
         name: "تمهيد",
-        value: charts?.total_time_per_phase?.GREETING,
+        value: charts?.total_time_per_phase?.INTRO_CONTENT,
         color: "#704FE6",
       },
       {
@@ -27,8 +27,8 @@ export default function StudentData({ charts }: any) {
         color: "#9B84EE",
       },
       {
-        name: "فديوهات",
-        value: charts?.total_time_per_phase?.INTRO_CONTENT,
+        name: "اختبار تمهيدي",
+        value: charts?.total_time_per_phase?.CONCEPTUAL_EXAM,
         color: "#DEC8FE",
       },
       {
@@ -37,19 +37,43 @@ export default function StudentData({ charts }: any) {
         color: "#704FE6",
       },
       {
-        name: "مفاهيم سابقه",
-        value: charts?.total_time_per_phase?.PREVIOUS_CONTENT_CONTENT,
+        name: "اسألة على الشرح",
+        value: charts?.total_time_per_phase?.EXPLANATION_EXAM,
         color: "#9B84EE",
       },
       {
-        name: "أمثله تطبيقيه",
-        value: charts?.total_time_per_phase?.PRACTICE_VIDEOS_CONTENT,
+        name: "مفهوم سابق",
+        value: charts?.total_time_per_phase?.PREVIOUS_CONTENT_CONTENT,
         color: "#DEC8FE",
+      },
+      {
+        name: "اسألة على المفوم السابق",
+        value: charts?.total_time_per_phase?.PREV_REVISION_EXAM,
+        color: "#704FE6",
+      },
+      {
+        name: "تطبيقات",
+        value: charts?.total_time_per_phase?.PRACTICE_VIDEOS_CONTENT,
+        color: "#9B84EE",
+      },
+      {
+        name: "تدريبات وتمارين",
+        value: charts?.total_time_per_phase?.EXERCISES_CONTENT,
+        color: "#DEC8FE",
+      },
+      {
+        name: "الإختبار النهائي",
+        value: charts?.total_time_per_phase?.FINAL_ASSESSMENT_EXAM,
+        color: "#704FE6",
       },
     ],
 
     // First row of concept metrics
     highest_scores_per_phase: [
+      {
+        label: "تقويم مبدأي",
+        value: charts?.highest_scores_per_phase.INTRO_EXAM,
+      },
       {
         label: "تمهيد",
         value: charts?.highest_scores_per_phase.INTRO_EXAM,

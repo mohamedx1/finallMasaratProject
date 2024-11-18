@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { getMainChat } from "../../../../store/mainChat/mainChatSlice";
 import getRestoreChat from "../../../../store/restoreMainChatt/act/actChatting";
 import { aiChatt } from "../../../../store/chattWithAi/chattAiSlice";
+import avatar from "../../../../images/userImage.jpg";
 
 import {
   arrayToSend,
@@ -275,6 +276,20 @@ export default function ChatComponent() {
       if (updatedChat?.length > 0 && content?.length > 1) {
         updatedChat[updatedChat.length - 1] = {
           ...updatedChat[updatedChat.length - 1],
+          // cause: updatedChat[updatedChat.length - 1].cause,
+          correct:
+            updatedChat[updatedChat.length - 1].mcq_question?.correct_answer ||
+            (updatedChat[
+              updatedChat.length - 1
+            ].sorting_question?.correct_order)?.join(", ") ||
+            updatedChat[updatedChat.length - 1].long_answer_question
+              ?.correct_answer ||
+            String(
+              updatedChat[updatedChat.length - 1].true_false_question
+                ?.correct_answer
+            )
+              .replace("false", "خطأ")
+              .replace("true", "صح"),
           student_answer: Array.isArray(processedAnswer)
             ? inputMessage // Convert array to a comma-separated string, or handle it as needed
             : typeof processedAnswer === "boolean"
@@ -283,7 +298,11 @@ export default function ChatComponent() {
         };
       } else {
         // this when the user take to the ai
-        updatedChat.push({ ...updatedChat, student_answer: inputMessage });
+        updatedChat.push({
+          ...updatedChat,
+
+          student_answer: inputMessage,
+        });
       }
 
       // Add a new entry for the next question, if there's a next question
@@ -413,7 +432,7 @@ export default function ChatComponent() {
                     </div>
                     <div className=' flex justify-between mt-4 w-4/5'>
                       <div
-                        className={`max-w-xs md:max-w-md px-4 py-2 rounded-l bg-transparent text-gray-800 `}
+                        className={`max-w-xs md:max-w-md px-4 py-2 rounded-l bg-transparent text-gray-800 flex flex-col `}
                       >
                         {msg?.question_text ||
                           msg?.content?.question_text ||
@@ -446,7 +465,7 @@ export default function ChatComponent() {
                 msg?.content?.student_answer !== "") ||
               (msg?.question && !msg?.audio_base64) ||
               (msg?.content?.question && !msg?.content?.answer) ? (
-                <div className='flex justify-end'>
+                <div className='flex justify-end gap-2'>
                   <div className='w-fit bg-primary-300 text-white max-w-xs md:max-w-md px-4 py-2 rounded-lg'>
                     {typeof (
                       msg?.student_answer ?? msg?.content?.student_answer
@@ -467,8 +486,78 @@ export default function ChatComponent() {
                         msg?.question ??
                         msg?.content?.question}
                   </div>
+                  <div className='w-12 '>
+                    <img
+                      src={avatar}
+                      alt='user'
+                      className='w-full rounded-full'
+                    />
+                  </div>
                 </div>
               ) : null}
+              {msg?.correct ? (
+                <div
+                  className={
+                    msg?.correct ? `bg-gray-300 p-2 rounded-lg mt-3` : ""
+                  }
+                >
+                  {msg?.correct ? (
+                    <div className='font-bold'>
+                      الإجابة الصحيحة :{msg?.correct}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  {msg?.cause}
+                </div>
+              ) : (
+                <div
+                  className={
+                    msg?.content?.cause
+                      ? `bg-gray-300 p-2 rounded-lg mt-3 w-60`
+                      : ""
+                  }
+                >
+                  {msg?.content?.mcq_question?.correct_answer ? (
+                    <div className='font-bold'>
+                      الإجابة الصحيحة :
+                      {msg?.content?.mcq_question?.correct_answer}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {msg?.content?.true_false_question?.correct_answer ? (
+                    <div className='font-bold'>
+                      الإجابة الصحيحة :
+                      {String(
+                        msg?.content?.true_false_question?.correct_answer
+                      ) === "true"
+                        ? "صح"
+                        : "خطأ"}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {msg?.content?.long_answer_question?.correct_answer ? (
+                    <div className='font-normal'>
+                      الإجابة الصحيحة :
+                      {msg?.content?.long_answer_question?.correct_answer}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {msg?.content?.sorting_question?.correct_order ? (
+                    <div className='font-bold'>
+                      الإجابة الصحيحة :
+                      {msg?.content?.sorting_question?.correct_order}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {msg?.content?.cause}
+                </div>
+              )}
             </div>
           ))}
         <div className='flex'>
