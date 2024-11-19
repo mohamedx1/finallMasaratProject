@@ -9,6 +9,11 @@ import {
   PolarAngleAxis,
   Radar,
 } from "recharts";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "../../ui/Chart";
 
 export default function ParentData({ charts }: { charts: any }) {
   const hidingOut =
@@ -75,11 +80,6 @@ export default function ParentData({ charts }: { charts: any }) {
             value:
               charts?.difficulty_level_percentage?.ADVANCED?.correct_percentage,
           },
-          {
-            subject: "تحدي",
-            value:
-              charts?.difficulty_level_percentage?.ADVANCED?.correct_percentage,
-          },
         ],
       },
       {
@@ -124,6 +124,76 @@ export default function ParentData({ charts }: { charts: any }) {
       muted: "#E5E7EB",
     },
   };
+
+  const renderPieChart = (data: any[], title: string) => (
+    <div className='p-4'>
+      <h4 className='text-sm text-center mb-4 text-[#7C3AED]'>{title}</h4>
+      <div className='h-[150px]  flex items-center justify-center'>
+        <ChartContainer
+          config={{
+            present: {
+              label: "متواجد",
+              color: "hsl(var(--chart-1))",
+            },
+            absent: {
+              label: "غير متواجد",
+              color: "hsl(var(--chart-2))",
+            },
+            committed: {
+              label: "ملتزم",
+              color: "hsl(var(--chart-1))",
+            },
+            notCommitted: {
+              label: "غير ملتزم",
+              color: "hsl(var(--chart-2))",
+            },
+          }}
+          className='w-[60%] h-full'
+        >
+          <ResponsiveContainer width='100%' height='100%'>
+            <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+              {" "}
+              {/* Added margins */}
+              <Pie
+                data={data}
+                dataKey='value'
+                nameKey='name'
+                cx='50%'
+                cy='50%'
+                innerRadius={0}
+                outerRadius={60}
+              >
+                {data.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={index === 0 ? "#7C3AED" : "#FDB913"}
+                  />
+                ))}
+              </Pie>
+              <ChartTooltip
+                content={<ChartTooltipContent labelKey='name' />}
+                wrapperStyle={{ zIndex: 100, width: 80 }}
+                // position={{ x: 0, y: 0 }}
+                // labelClassName='font-bold'
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+        <div className='text-sm space-y-2'>
+          {data.map((entry, index) => (
+            <div key={`legend-${index}`} className='flex items-center gap-2'>
+              <div
+                className={`w-3 h-3 rounded-full ${
+                  index === 0 ? "bg-[#7C3AED]" : "bg-[#FDB913]"
+                }`}
+              />
+              <span>{entry.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
   return (
     <div className='space-y-8'>
       {/* Radar Charts Section */}
@@ -178,86 +248,42 @@ export default function ParentData({ charts }: { charts: any }) {
       <h3 className={`${hidingOut} px-6`}>تقارير الرؤية الحاسوبية</h3>
       <div>
         <h3 className={`${hidingIn} mx-auto`}>تقارير الرؤية الحاسوبية</h3>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-          <div className='p-4'>
-            <h4 className='text-sm text-center mb-4 text-[#7C3AED]'>
-              معدل التواجد
-            </h4>
-            <div className='h-[150px] flex items-center justify-center'>
-              <ResponsiveContainer width='60%' height='100%'>
-                <PieChart>
-                  <Pie
-                    data={[
-                      {
-                        name: "متواجد",
-                        value: mockData.attendanceData.present,
-                      },
-                      {
-                        name: "غير متواجد",
-                        value: mockData.attendanceData.absent,
-                      },
-                    ]}
-                    dataKey='value'
-                    innerRadius={0}
-                    outerRadius={60}
-                  >
-                    <Cell fill='#7C3AED' />
-                    <Cell fill='#FDB913' />
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className='text-sm space-y-2'>
-                <div className='flex items-center gap-2'>
-                  <div className='w-3 h-3 rounded-full bg-[#7C3AED]' />
-                  <span>متواجد</span>
-                </div>
-                <div className='flex items-center gap-2'>
-                  <div className='w-3 h-3 rounded-full bg-[#FDB913]' />
-                  <span>غير متواجد</span>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div className='p-4'>
-            <h4 className='text-sm text-center mb-4 text-[#7C3AED]'>
-              معدل الالتزام
-            </h4>
-            <div className='h-[150px] flex items-center justify-center'>
-              <ResponsiveContainer width='60%' height='100%'>
-                <PieChart>
-                  <Pie
-                    data={[
-                      {
-                        name: "ملتزم",
-                        value: mockData.commitmentData.committed,
-                      },
-                      {
-                        name: "غير ملتزم",
-                        value: mockData.commitmentData.notCommitted,
-                      },
-                    ]}
-                    dataKey='value'
-                    innerRadius={0}
-                    outerRadius={60}
-                  >
-                    <Cell fill='#7C3AED' />
-                    <Cell fill='#FDB913' />
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className='text-sm space-y-2'>
-                <div className='flex items-center gap-2'>
-                  <div className='w-3 h-3 rounded-full bg-[#7C3AED]' />
-                  <span>ملتزم</span>
-                </div>
-                <div className='flex items-center gap-2'>
-                  <div className='w-3 h-3 rounded-full bg-[#FDB913]' />
-                  <span>غير ملتزم</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+          {renderPieChart(
+            [
+              {
+                name: "متواجد",
+                value:
+                  charts?.concentration_percentage?.attentive_percentage || 0,
+              },
+              {
+                name: "غير متواجد",
+                value:
+                  100 -
+                  (charts?.concentration_percentage?.attentive_percentage || 0),
+              },
+            ],
+            "معدل التواجد"
+          )}
+          {renderPieChart(
+            [
+              {
+                name: "ملتزم",
+                value:
+                  charts?.concentration_percentage?.concentration_percentage ||
+                  0,
+              },
+              {
+                name: "غير ملتزم",
+                value:
+                  100 -
+                  (charts?.concentration_percentage?.concentration_percentage ||
+                    0),
+              },
+            ],
+            "معدل الالتزام"
+          )}
         </div>
       </div>
     </div>

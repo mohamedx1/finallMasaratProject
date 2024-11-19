@@ -279,9 +279,9 @@ export default function ChatComponent() {
           // cause: updatedChat[updatedChat.length - 1].cause,
           correct:
             updatedChat[updatedChat.length - 1].mcq_question?.correct_answer ||
-            (updatedChat[
+            updatedChat[
               updatedChat.length - 1
-            ].sorting_question?.correct_order)?.join(", ") ||
+            ].sorting_question?.correct_order?.join(", ") ||
             updatedChat[updatedChat.length - 1].long_answer_question
               ?.correct_answer ||
             String(
@@ -498,11 +498,11 @@ export default function ChatComponent() {
               {msg?.correct ? (
                 <div
                   className={
-                    msg?.correct ? `bg-gray-300 p-2 rounded-lg mt-3` : ""
+                    msg?.correct ? `bg-gray-300 p-2 rounded-lg mt-3 w-60` : ""
                   }
                 >
                   {msg?.correct ? (
-                    <div className='font-bold'>
+                    <div className='font-bold w-fit bg-gray-300 p-2 rounded-lg'>
                       الإجابة الصحيحة :{msg?.correct}
                     </div>
                   ) : (
@@ -520,7 +520,7 @@ export default function ChatComponent() {
                   }
                 >
                   {msg?.content?.mcq_question?.correct_answer ? (
-                    <div className='font-bold'>
+                    <div className=' font-bold w-fit bg-gray-300 p-2 rounded-lg'>
                       الإجابة الصحيحة :
                       {msg?.content?.mcq_question?.correct_answer}
                     </div>
@@ -528,7 +528,7 @@ export default function ChatComponent() {
                     ""
                   )}
                   {msg?.content?.true_false_question?.correct_answer ? (
-                    <div className='font-bold'>
+                    <div className='font-bold w-fit bg-gray-300 p-2 rounded-lg '>
                       الإجابة الصحيحة :
                       {String(
                         msg?.content?.true_false_question?.correct_answer
@@ -540,7 +540,7 @@ export default function ChatComponent() {
                     ""
                   )}
                   {msg?.content?.long_answer_question?.correct_answer ? (
-                    <div className='font-normal'>
+                    <div className='font-normal  w-52 bg-gray-300 p-2 rounded-lg'>
                       الإجابة الصحيحة :
                       {msg?.content?.long_answer_question?.correct_answer}
                     </div>
@@ -548,7 +548,7 @@ export default function ChatComponent() {
                     ""
                   )}
                   {msg?.content?.sorting_question?.correct_order ? (
-                    <div className='font-bold'>
+                    <div className='font-bold w-fit bg-gray-300 p-2 rounded-lg '>
                       الإجابة الصحيحة :
                       {msg?.content?.sorting_question?.correct_order}
                     </div>
