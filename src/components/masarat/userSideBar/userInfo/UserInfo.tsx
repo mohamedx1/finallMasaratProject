@@ -7,9 +7,8 @@ import { AvatarProgress } from "./avatar-progress";
 
 export default function UserInfo() {
   const { isExpended } = useAppSelector((state) => state.sideBar);
-  const { username, student_profile, isLoading, error } = useAppSelector(
-    (state) => state.userData
-  );
+  const { first_name, last_name, student_profile, isLoading, error } =
+    useAppSelector((state) => state.userData);
 
   return (
     <>
@@ -42,7 +41,9 @@ export default function UserInfo() {
                 : "w-0 overflow-hidden transition-all mx-auto duration-300 ease-in-out"
             }
           >
-            <h2 className='text-text-lg font-semibold '>{username}</h2>
+            <h2 className='text-text-lg font-semibold '>
+              {first_name + " " + last_name}
+            </h2>
             <p className='text-sm text-gray-500  '>
               {student_profile.academic_year}
             </p>

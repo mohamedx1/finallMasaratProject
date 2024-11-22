@@ -8,6 +8,7 @@ import { getMainChat } from "../../../../store/mainChat/mainChatSlice";
 import getRestoreChat from "../../../../store/restoreMainChatt/act/actChatting";
 import { aiChatt } from "../../../../store/chattWithAi/chattAiSlice";
 import avatar from "../../../../images/userImage.jpg";
+import { Speech } from "react-speech";
 
 import {
   arrayToSend,
@@ -21,6 +22,7 @@ import { toggleModal } from "../../../../store/modalCollaps/ModalCollapseSlice";
 import { changeAcess } from "../../../../store/camerAcess/CamerAcsess";
 import Modal from "../../../common/modal/Modal";
 import { useNavigate } from "react-router-dom";
+
 type Message = {
   [x: string]: any;
   id?: string;
@@ -151,6 +153,12 @@ export default function ChatComponent() {
           },
         ])
       );
+      if (audioIsOpend) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(message);
+        utterance.lang = "ar"; // Set language to Arabic
+        window.speechSynthesis.speak(utterance);
+      }
       if (content?.[0].id && !content?.[0].content_type) {
         // setSendChat((prevMessages) => [...prevMessages, content?.[0]]);
         dispatch(arrayToSend([content?.[0]]));

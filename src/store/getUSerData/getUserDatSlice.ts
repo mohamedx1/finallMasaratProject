@@ -6,7 +6,8 @@ import getUserData from "./actGetUserData"
 
 
 const initialState:any = {
-    username: "",
+  first_name: "",
+  last_name:"",
     student_profile: {
         academic_year: "",
         first_time_login: false,
@@ -27,7 +28,8 @@ const userDataSlice = createSlice({
     builder.addCase(getUserData.fulfilled, (state , action) => {
       state.isLoading = "succeeded";
       state.error = null;
-      state.username = action.payload.username;
+      state.first_name = action.payload.first_name;
+      state.last_name = action.payload.last_name;
     state.student_profile.academic_year = action.payload.student_profile.academic_year;
     state.student_profile.first_time_login = action.payload.student_profile.first_time_login
     })
