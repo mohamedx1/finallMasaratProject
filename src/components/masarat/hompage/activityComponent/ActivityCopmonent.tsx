@@ -138,7 +138,7 @@ export default function ActivityComponent() {
   };
 
   const renderDynamicContent = (dynamicContent: DynamicContent) => (
-    <Card className='w-full max-w-2xl mb-8 h-[calc(100vh-20rem)] mt-14'>
+    <Card className='w-full max-w-2xl mb-8 h-[calc(100vh-20rem)] md:mt-28'>
       <iframe
         className='w-full h-full'
         title='Dynamic Content'

@@ -503,7 +503,7 @@ export default function ChatComponent() {
                   </div>
                 </div>
               ) : null}
-              {msg?.correct ? (
+              {msg?.correct && msg?.cause ? (
                 <div
                   className={
                     msg?.correct ? `bg-gray-300 p-2 rounded-lg mt-3 w-60` : ""

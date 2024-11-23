@@ -2,25 +2,33 @@ import React, { useState } from "react";
 import {
   Camera,
   CameraOff,
-  Volume1,
   Clipboard,
   LogOut,
-  Play,
   VolumeOff,
   Volume2,
 } from "lucide-react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../../ui/dialog";
+import { Button } from "../../../ui/Button";
+
 import Mainbutn from "./../../../common/buttons/Mainbutn";
-import CustomSlider from "./../../../common/slider/CustomSlider";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { changeAcess } from "../../../../store/camerAcess/CamerAcsess";
 import { useNavigate } from "react-router-dom";
 import { toggleaudio } from "../../../../store/modalCollaps/ModalCollapseSlice";
+import { Input } from "../../../ui/Input";
 
 export default function Settings() {
   const dispatch = useAppDispatch();
-  const [sliderValue, setSliderValue] = useState(80);
   const { audioIsOpend } = useAppSelector((state) => state.togegleModal);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { isExpended } = useAppSelector((state) => state.sideBar);
   const { camerIsAcsessable } = useAppSelector((state) => state.cameraAcsess);
   const navigate = useNavigate();
@@ -31,7 +39,11 @@ export default function Settings() {
   const handleClickNotAceccable = async () => {
     dispatch(changeAcess(false));
   };
-  // Custom styles
+  const handleLogout = () => {
+    // Perform logout logic here
+    localStorage.removeItem("token"); // Example: Clear token
+    window.location.reload(); // Example: Reload page or redirect user
+  };
 
   return (
     <div className={`mt-4 ${isExpended ? "" : "mx-auto"} `}>
@@ -106,19 +118,48 @@ export default function Settings() {
         </div>
       </div>
       <div className={`flex  mt-2 ${isExpended ? "gap-4" : "items-center"}`}>
-        <Mainbutn
-          pading={"p-1"}
-          bg={"bg-white"}
-          hvr={"hover:bg-primary-300 hover:text-white"}
-          border={"border-primary-100  border shadow-md"}
-          text={"text-primary-300"}
-          onClick={() => {
-            navigate("/");
-            localStorage.removeItem("token");
-          }}
-        >
-          <LogOut />
-        </Mainbutn>
+        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <DialogTrigger asChild>
+            <Mainbutn
+              pading='p-1'
+              bg='bg-white'
+              hvr='hover:bg-primary-300 hover:text-white'
+              border='border-primary-100 border shadow-md'
+              text='text-primary-300'
+              onClick={() => setIsModalOpen(true)}
+            >
+              <LogOut />
+            </Mainbutn>
+          </DialogTrigger>
+          {isModalOpen && (
+            <DialogContent
+              className='sm:max-w-[425px] rtl:text-right bg-white'
+              dir='rtl'
+            >
+              <DialogHeader className='rtl:text-right p-2'>
+                <DialogTitle>تأكيد تسجيل الخروج</DialogTitle>
+              </DialogHeader>
+              <p className='text-gray-700 mb-4'>
+                هل أنت متأكد أنك تريد تسجيل الخروج؟
+              </p>
+              <DialogFooter className='flex justify-end gap-2'>
+                <Button
+                  className='bg-gray-300 text-black rounded-md px-4 py-2 hover:bg-gray-400'
+                  onClick={() => setIsModalOpen(false)} // Close the modal
+                >
+                  إلغاء
+                </Button>
+                <Button
+                  className='bg-primary-300 text-white rounded-md px-4 py-2 hover:bg-primary-400'
+                  onClick={handleLogout} // Logout and close the modal
+                >
+                  تأكيد
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          )}
+        </Dialog>
+
         <div
           className={
             isExpended

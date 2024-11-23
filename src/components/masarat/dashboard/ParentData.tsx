@@ -14,13 +14,27 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../../ui/Chart";
+import { motion } from "framer-motion";
+import { CheckCircle, XCircle } from "lucide-react";
 
 export default function ParentData({ charts }: { charts: any }) {
   const hidingOut =
     "text-center font-semibold bg-primary-300 text-white w-fit my-4 rounded-2xl px-2 py-1 mx-auto";
   const hidingIn =
     "text-center text-texm font-medium mt-4 bg-primary-100 text-primary-300 w-fit rounded-2xl px-2 py-1";
-
+  const tableVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+  const rowVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
   const mockData = {
     // Radar charts data
     radarCharts: [
@@ -285,6 +299,68 @@ export default function ParentData({ charts }: { charts: any }) {
             "معدل الالتزام"
           )}
         </div>
+      </div>
+      <h3 className={`${hidingOut} px-6`}>التغذية الرجعية للأسألة المقالية</h3>
+      <div className='container mx-auto p-6 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl shadow-lg'>
+        <motion.table
+          className='w-full border-collapse'
+          dir='rtl'
+          variants={tableVariants}
+          initial='hidden'
+          animate='visible'
+        >
+          <thead>
+            <tr className='bg-gradient-to-r from-purple-600 to-indigo-600 text-white'>
+              <th className='p-3 text-right'>السؤال</th>
+              <th className='p-3 text-right'>الإجابة الصحيحة</th>
+              <th className='p-3 text-right'>إجابة الطالب</th>
+              <th className='p-3 text-right'>التعليق</th>
+            </tr>
+          </thead>
+          <tbody>
+            {charts?.long_answer_questions_result_data?.map(
+              (item: any, index: number) => (
+                <>
+                  <motion.tr
+                    key={index}
+                    variants={rowVariants}
+                    className='border-b border-purple-200 hover:bg-purple-50 transition-colors duration-200'
+                  >
+                    <td className='p-3'>{item.question_text}</td>
+                    <td className='p-3'>
+                      <div className='flex items-center '>
+                        <CheckCircle className='w-5 h-5 text-green-500 ml-2' />
+                        {item.correct_answer}
+                      </div>
+                    </td>
+                    <td className='p-3'>
+                      <div className='flex items-center flex-1'>
+                        {item.correct_answer === item.student_answer ? (
+                          <CheckCircle className='w-8 h-8 text-green-500 ml-2' />
+                        ) : (
+                          <XCircle className='w-8 h-8 text-red-500 ml-2' />
+                        )}
+
+                        {item.student_answer}
+                      </div>
+                    </td>
+                    <td className='p-3'>
+                      <div
+                        className={
+                          item.correct_answer === item.student_answer
+                            ? "bg-green-100 border-r-4 border-green-500 p-2 rounded"
+                            : "bg-red-100 border-r-4 border-red-500 p-2 rounded"
+                        }
+                      >
+                        {item.feedback}
+                      </div>
+                    </td>
+                  </motion.tr>
+                </>
+              )
+            )}
+          </tbody>
+        </motion.table>
       </div>
     </div>
   );
