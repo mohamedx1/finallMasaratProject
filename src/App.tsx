@@ -12,7 +12,7 @@ import Dashboard from "./components/masarat/dashboard/Dashboard";
 import Login from "./components/login/Login";
 import ChooseLearningMethod from "./components/survay/ChooseLearningMethod";
 import Priorities from "./components/survay/Priorities";
-import Gard from "./components/Gard/Gard";
+import Gard, { AuthGard } from "./components/Gard/Gard";
 import { Helmet } from "react-helmet";
 import logo from "../src/images/smallLogo.svg";
 
@@ -20,7 +20,16 @@ function App() {
   const mainRouter = createBrowserRouter([
     // { path: "/", element:  },
 
-    { path: "/", element: <Login /> },
+    {
+      path: "/",
+      element: (
+        <>
+          <AuthGard>
+            <Login />
+          </AuthGard>
+        </>
+      ),
+    },
     {
       path: "/masarat/OnBording",
       element: (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "../ui/Card";
 import {
   Eye,
@@ -20,21 +20,21 @@ const initialItems = [
     id: 0,
     title: "التفاعل مع المحتوى",
     description:
-      "من خلال استخدامك المستمر لمنصة مسارات، يتم تحليل تفاعلك مع المحتويات المختلفة لمعرفة أسلوب التعلم الذي يناسبك بشكل أفضل (بصري، سمعي، تجريبي، أو منطقي). تعتمد هذه الطريقة على مراقبة تفاعلك واختيار المحتويات التي تفضلها.",
+      "	دعنا نقوم بالمهمة نيابةً عنك!  من خلال تفاعلك مع المحتوى سوف نكتشف أسلوبك المفضل",
     icon: Command,
   },
   {
     id: 1,
     title: "الإجابة على بعض الأسئلة",
     description:
-      "من خلال إجابتك على مجموعة من الأسئلة الموجهة، تستطيع منصة مسارات تحديد أسلوب تعلمك بدقة. ستساعدك هذه الأسئلة على فهم احتياجاتك التعليمية وتوجيهك نحو المحتويات التي تناسب طريقة تفكيرك.",
+      "	شاركنا برأيك!  قم بالإجابة على مجموعة قصيرة من الأسئلة، وسنقوم بتحليلها لتحديد أسلوب التعلم الذي يناسبك.",
     icon: Zap,
   },
   {
     id: 2,
     title: "تحديد تفضيلاتك التعليمية",
     description:
-      "يمكنك تحديد تفضيلاتك التعليمية بشكل مباشر عن طريق اختيار الأساليب التعليمية التي تفضلها (بصري، سمعي، تجريبي، أو منطقي). بناءً على هذه التفضيلات، ستقوم المنصة بتخصيص المحتوى المناسب لك.",
+      "	حدد أولوياتك بنفسك! قم بترتيب أساليب التعلم (بصري، سمعي، تجريبي، قرائي وكتابي) بناءً على تفضيلاتك الشخصية",
     icon: Layers2,
   },
 ];
@@ -42,14 +42,28 @@ const initialItems = [
 export default function ChooseLearningMethod() {
   const [selectedContent, setSelectedContent] = useState(initialItems[0]);
   const navigate = useNavigate();
+  const ft = localStorage.getItem("fTime");
+  useEffect(() => {
+    if (ft !== "true") {
+      navigate("/masarat/home");
+    }
+  }, []);
+
   const handelSubmit = () => {
-    if (selectedContent.id === initialItems[2].id) {
+    if (selectedContent.id === 2) {
       //   <Navigate to={"/masarat/survay/priorities"} />;
       navigate("/masarat/survay/priorities");
       console.log(selectedContent.id, initialItems[2].id);
-    } else {
-      <Navigate to={"/masarat/home"} />;
+      return;
     }
+
+    if (selectedContent.id === 1) {
+      localStorage.setItem("second", "1");
+      navigate("/masarat/home");
+      return;
+    }
+
+    navigate("/masarat/home");
   };
   return (
     <div className='flex justify-center h-screen items-center ' dir='rtl'>

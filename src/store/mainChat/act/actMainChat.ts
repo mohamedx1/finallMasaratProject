@@ -70,11 +70,34 @@ interface Choice {
 
 
 
-const getMainChat = createAsyncThunk("mainChat/getMainChat", async ({ token,content, options }: { token: string; content?: any , options?:any }, thunkAPI) => {
+const getMainChat = createAsyncThunk("mainChat/getMainChat", async ({ token, content, options }: { token: string; content?: any, options?: any }, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     const payloud = { ...(options && { options }), ...(content && { content }) }
+    const phase = JSON.parse(localStorage.getItem("second"))
+
     try {
-        const response = await axios.post<any>("http://localhost:8000/chats/send_message/", {   ...payloud , lesson_id: "6675eaf5-2d4c-458f-8bb3-9671ead1a1ab" }, {
+
+        if (phase === 1) {
+            const response = await axios.get<any>("http://127.0.0.1:8000/questions/vark_exam/", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = response.data;
+            localStorage.setItem("second", "2")
+            return data;
+        }
+        if (phase === 2) {
+            const response = await axios.post<any>("http://127.0.0.1:8000/cms/grade_survey/", { ...payloud, lesson_id: "6675eaf5-2d4c-458f-8bb3-9671ead1a1ab" }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = response.data;
+            localStorage.removeItem("second")
+            return data;
+        }
+        const response = await axios.post<any>("http://localhost:8000/chats/send_message/", { ...payloud, lesson_id: "6675eaf5-2d4c-458f-8bb3-9671ead1a1ab" }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -92,4 +115,3 @@ const getMainChat = createAsyncThunk("mainChat/getMainChat", async ({ token,cont
 );
 
 export default getMainChat
-

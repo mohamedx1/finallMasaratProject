@@ -6,11 +6,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../ui/use-toast";
 import { Toaster } from "../ui/toaster";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, Eye, EyeOff } from "lucide-react";
+import ArabicTermsModal from "./ArabicTermsModal";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [show, setShow] = useState(false);
   const { toast } = useToast();
   //   const [, setUserName] = useState("");
 
@@ -32,6 +34,7 @@ export default function Login() {
       console.log(response);
       if (response.status === 200) {
         localStorage.setItem("token", response.data.access);
+        localStorage.setItem("fTime", response.data.first_time_login);
         setUserName("");
         setPassword("");
         navigate("/masarat/OnBording");
@@ -86,17 +89,27 @@ export default function Login() {
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
-            <div className='space-y-2'>
+            <div className='space-y-2 relative'>
+              <div
+                className='absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer'
+                onClick={() => setShow(!show)}
+              >
+                {show ? (
+                  <EyeOff className='size-5' />
+                ) : (
+                  <Eye className='size-5' />
+                )}
+              </div>
               <Input
                 className='text-right'
                 dir='rtl'
                 placeholder='كلمة المرور'
-                type='password'
+                type={show ? "text" : "password"}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
-
+          <ArabicTermsModal />
           <Button
             className='w-full bg-primary-300 hover:bg-[#6D28D9] text-white '
             onClick={handleSubmit}

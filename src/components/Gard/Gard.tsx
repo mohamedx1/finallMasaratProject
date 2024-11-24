@@ -12,3 +12,15 @@ export default function Gard({ children }: any) {
     </>
   );
 }
+
+export function AuthGard({ children }: any) {
+  if (localStorage.getItem("token") == null) {
+    return <>{children}</>;
+  }
+
+  return (
+    <>
+      <Navigate to={"/masarat/home"} />
+    </>
+  );
+}

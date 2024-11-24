@@ -221,17 +221,19 @@ export default function ChatComponent() {
       //   ...prev,
       //   { question: inputMessage }
       // ])
-      dispatch(arrayToSend([{ question: inputMessage }]));
+      dispatch(arrayToSend([{ question: inputMessage.trim() }]));
 
       // Dispatch the action to get AI response
-      const userResponse = { question: inputMessage };
+      const userResponse = { question: inputMessage.trim() };
       dispatch(aiChatt({ userResponse, token }));
 
       setInputMessage("");
       return;
     }
 
-    let processedAnswer: any = inputMessage;
+    let processedAnswer: any = inputMessage
+      .split(/[\s,-]+/)
+      .map((item) => item.trim());
     const questionType = content?.[currentMessage]?.question_type;
 
     switch (questionType) {
@@ -243,14 +245,14 @@ export default function ChatComponent() {
         break;
       case "TRUE_FALSE":
         processedAnswer =
-          inputMessage.toLowerCase() === "صح"
+          inputMessage.toLowerCase().trim() === "صح"
             ? true
-            : inputMessage.toLowerCase() === "خطأ"
+            : inputMessage.toLowerCase().trim() === "خطأ"
             ? false
-            : inputMessage;
+            : inputMessage.trim();
         break;
       default:
-        processedAnswer = inputMessage;
+        processedAnswer = inputMessage.trim();
     }
 
     const newMessage = { student_answer: processedAnswer };
@@ -287,9 +289,12 @@ export default function ChatComponent() {
           // cause: updatedChat[updatedChat.length - 1].cause,
           correct:
             updatedChat[updatedChat.length - 1].mcq_question?.correct_answer ||
-            updatedChat[
-              updatedChat.length - 1
-            ].sorting_question?.correct_order?.join(", ") ||
+            (updatedChat?.[updatedChat.length - 1]?.sorting_question
+              ?.correct_order
+              ? updatedChat?.[
+                  updatedChat.length - 1
+                ]?.sorting_question?.correct_order?.join(",")
+              : "") ||
             updatedChat[updatedChat.length - 1].long_answer_question
               ?.correct_answer ||
             String(
@@ -503,12 +508,21 @@ export default function ChatComponent() {
                   </div>
                 </div>
               ) : null}
-              {msg?.correct && msg?.cause ? (
+              {msg?.correct &&
+              msg.correct !== "undefined" &&
+              msg.correct !== "null" ? (
                 <div
                   className={
                     msg?.correct ? `bg-gray-300 p-2 rounded-lg mt-3 w-60` : ""
                   }
                 >
+                  {/* {console.log(msg?.correcte)} undefined */}
+                  {console.log(
+                    "Value:",
+                    msg?.correct,
+                    "Type:",
+                    typeof msg?.correct
+                  )}
                   {msg?.correct ? (
                     <div className='font-bold w-fit bg-gray-300 p-2 rounded-lg'>
                       الإجابة الصحيحة :{msg?.correct}
@@ -517,7 +531,7 @@ export default function ChatComponent() {
                     ""
                   )}
 
-                  {msg?.cause}
+                  {msg?.cause && msg?.correct ? msg?.cause : ""}
                 </div>
               ) : (
                 <div

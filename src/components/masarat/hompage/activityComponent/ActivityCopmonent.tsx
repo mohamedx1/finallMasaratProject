@@ -61,7 +61,7 @@ export default function ActivityComponent() {
 
     return (
       //  -------------------------------------start header video------------------------------------------------
-      <Card className='w-full max-w-2xl mb-8 border-none xl:mt-6 lg:mt-20  '>
+      <Card className='w-full max-w-2xl mb-8 border-none md:mt-12 mt-40  '>
         <CardContent className='p-4'>
           <div className='mb-2 text-sm text-gray-500'>
             فيديو {currentVideo + 1} من {videoContent.length}

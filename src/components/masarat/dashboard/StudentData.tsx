@@ -228,7 +228,7 @@ export default function StudentData({ charts }: any) {
             </ResponsiveContainer>
             <div className='text-center -mt-4'>
               <span className='text-2xl font-bold'>
-                {Number(charts?.progress_percentage) + "%"}
+                {Number(charts?.progress_percentage).toFixed() + "%"}
               </span>
             </div>
           </div>

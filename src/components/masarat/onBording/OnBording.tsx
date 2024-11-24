@@ -10,7 +10,7 @@ import four from "../../../images/four.svg";
 
 export default function OnBording() {
   const sliderRef = useRef<Slider | null>(null);
-
+  const ft = localStorage.getItem("fTime");
   const next = () => {
     sliderRef.current?.slickNext();
   };
@@ -110,7 +110,9 @@ export default function OnBording() {
                 التالي
               </button>
               <div className='text-primary-300 p-2 cursor-pointer mt-auto z-20 border-primary-300  border rounded-lg'>
-                <Link to='/masarat/survay'>تخطي...</Link>
+                <Link to={ft ? "/masarat/survay" : "/masarat/home"}>
+                  تخطي...
+                </Link>
               </div>
             </div>
           </div>

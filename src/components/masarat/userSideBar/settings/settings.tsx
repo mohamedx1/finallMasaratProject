@@ -42,6 +42,8 @@ export default function Settings() {
   const handleLogout = () => {
     // Perform logout logic here
     localStorage.removeItem("token"); // Example: Clear token
+    localStorage.removeItem("fTime");
+    localStorage.removeItem("second");
     window.location.reload(); // Example: Reload page or redirect user
   };
 

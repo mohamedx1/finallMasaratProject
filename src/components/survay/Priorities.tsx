@@ -4,31 +4,32 @@ import { Eye, Play, Menu, ExternalLink, Speaker, Layers2 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Reorder } from "framer-motion";
 import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const initialItems = [
   {
-    id: "experiential",
+    id: "Kinesthetic",
     title: "أسلوب التعلم التجريبي",
     description:
       "يعتمد هذا الأسلوب على التعلم من خلال التجربة العملية والمشاركة المباشرة في الأنشطة. المتعلمون التجريبيون يفضلون التفاعل المباشر والاختبار العملي لاكتساب المعرفة.",
     icon: Play,
   },
   {
-    id: "logical",
+    id: "Reading/Writing",
     title: "أسلوب التعلم المنطقي",
     description:
       "يعتمد المتعلمون المنطقيون على التفكير المنطقي والتحليل الرياضي لحل المشكلات وفهم المفاهيم. هم يميلون إلى التعلم من خلال التفكير النقدي والبحث عن العلاقات بين الأفكار.",
     icon: Layers2,
   },
   {
-    id: "auditory",
+    id: "Auditory",
     title: "أسلوب التعلم السمعي",
     description:
       "يفضل المتعلمون السمعيون اكتساب المعرفة عن طريق الاستماع. هذا الأسلوب يناسب من يتعلمون بشكل أفضل من خلال المحاضرات، المناقشات، واللغات الصوتية.",
     icon: Speaker,
   },
   {
-    id: "visual",
+    id: "Visual",
     title: "أسلوب التعلم البصري",
     description:
       "يعتمد المتعلمون البصريون على الصور، الرسوم البيانية، والمخططات لفهم المعلومات. يفضلون التعلم من خلال رؤية المعلومات وتفسيرها بصرياً.",
@@ -40,9 +41,20 @@ export default function Priorities() {
   const [items, setItems] = useState(initialItems);
   const navigate = useNavigate();
 
-  const handelSubmit = () => {
+  const token = localStorage.getItem("token");
+  const handelSubmit = async () => {
     console.log(items[0]);
-    // <Navigate to={"/masarat/home"} />;
+    await axios.post(
+      "http://127.0.0.1:8000/users/change-learning-type/",
+      {
+        learning_type: items[0].id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     navigate("/masarat/home");
   };
   return (
