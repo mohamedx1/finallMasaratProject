@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 
 
@@ -7,7 +7,8 @@ const modalaCollapsSlise = createSlice({
   name: 'camera',
   initialState: {
     ModalIsOpend: false, // Initial state is expanded (not collapsed)
-    audioIsOpend:true,
+    audioIsOpend: true,
+    rols:false,
   },
   reducers: {
     toggleModal(state) {
@@ -16,8 +17,12 @@ const modalaCollapsSlise = createSlice({
     toggleaudio(state) {
       state.audioIsOpend = !state.audioIsOpend; // Toggle the collapsed state
     },
+    changeRools(state , action: PayloadAction<any>) {
+      state.rols = action.payload
+      console.log(action.payload)
+    }
   },
 });
 
 export default modalaCollapsSlise.reducer;
-export const { toggleModal , toggleaudio } = modalaCollapsSlise.actions;
+export const { toggleModal , toggleaudio , changeRools  } = modalaCollapsSlise.actions;

@@ -8,12 +8,14 @@ import { useToast } from "../ui/use-toast";
 import { Toaster } from "../ui/toaster";
 import { CircleAlert, Eye, EyeOff } from "lucide-react";
 import ArabicTermsModal from "./ArabicTermsModal";
+import { useAppSelector } from "../../store/hooks";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [show, setShow] = useState(false);
   const { toast } = useToast();
+  const { rols } = useAppSelector((state) => state.togegleModal);
   //   const [, setUserName] = useState("");
 
   const navigate = useNavigate();
@@ -86,6 +88,7 @@ export default function Login() {
                 dir='rtl'
                 placeholder='اسم المستخدم'
                 type='text'
+                required
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
@@ -95,9 +98,9 @@ export default function Login() {
                 onClick={() => setShow(!show)}
               >
                 {show ? (
-                  <EyeOff className='size-5' />
-                ) : (
                   <Eye className='size-5' />
+                ) : (
+                  <EyeOff className='size-5' />
                 )}
               </div>
               <Input
@@ -105,6 +108,7 @@ export default function Login() {
                 dir='rtl'
                 placeholder='كلمة المرور'
                 type={show ? "text" : "password"}
+                required
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
@@ -113,6 +117,7 @@ export default function Login() {
           <Button
             className='w-full bg-primary-300 hover:bg-[#6D28D9] text-white '
             onClick={handleSubmit}
+            disabled={!rols}
           >
             تسجيل الدخول
           </Button>

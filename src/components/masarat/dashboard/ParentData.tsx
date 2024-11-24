@@ -335,21 +335,13 @@ export default function ParentData({ charts }: { charts: any }) {
                     </td>
                     <td className='p-3'>
                       <div className='flex items-center flex-1'>
-                        {item.correct_answer === item.student_answer ? (
-                          <CheckCircle className='w-8 h-8 text-green-500 ml-2' />
-                        ) : (
-                          <XCircle className='w-8 h-8 text-red-500 ml-2' />
-                        )}
-
                         {item.student_answer}
                       </div>
                     </td>
                     <td className='p-3'>
                       <div
                         className={
-                          item.correct_answer === item.student_answer
-                            ? "bg-green-100 border-r-4 border-green-500 p-2 rounded"
-                            : "bg-red-100 border-r-4 border-red-500 p-2 rounded"
+                          "bg-primary-100 border-r-4 border-primary-300 p-2 rounded"
                         }
                       >
                         {item.feedback}
