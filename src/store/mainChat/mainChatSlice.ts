@@ -129,12 +129,10 @@ const mainChatSlice = createSlice({
             state.message = action.payload.message;
             state.content = action.payload.content;
             state.options = action.payload.options;
-            console.log(action.payload);
         });
         builder.addCase(getMainChat.rejected, (state, action: any) => {
             state.isLoading = "failed";
             state.error = action.payload ?? "An error occurred";
-            console.log(action.payload);
         });
     },
 });

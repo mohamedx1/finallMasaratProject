@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { BASE_API_URL } from "../../../config";
 
 interface BootResponse {
   chat_id: string;
@@ -15,10 +16,9 @@ type Content = { id?: string; question_text?: string; student_answer?: string };
 
 
 const getRestoreChat = createAsyncThunk("restoreMainChat/getRestoreChat", async (token:any, thunkAPI) => {
-  console.log(token)
   const { rejectWithValue } = thunkAPI
   try {
-    const response = await axios.get<BootResponse>("http://127.0.0.1:8000/chats/retrieve-messages/?lesson_id=6675eaf5-2d4c-458f-8bb3-9671ead1a1ab", {
+    const response = await axios.get<BootResponse>(`${BASE_API_URL}/chats/retrieve-messages/?lesson_id=6675eaf5-2d4c-458f-8bb3-9671ead1a1ab`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -27,7 +27,6 @@ const getRestoreChat = createAsyncThunk("restoreMainChat/getRestoreChat", async 
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log(error)
       return rejectWithValue(error.message)
     } else
       return rejectWithValue("An Unexpected Error")

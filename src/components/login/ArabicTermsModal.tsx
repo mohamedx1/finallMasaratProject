@@ -7,18 +7,17 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from "../ui/dialog";
 import { ScrollArea } from "../ui/scroll-area";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store/hooks";
 import { changeRools } from "../../store/modalCollaps/ModalCollapseSlice";
 
 export default function ArabicTermsModal() {
   const [isChecked, setIsChecked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const { rols } = useAppSelector((state) => state.togegleModal);
+  //   const { rols } = useAppSelector((state) => state.togegleModal);
 
   const handleCheckboxChange = (checked: boolean) => {
     setIsChecked(checked);
@@ -47,7 +46,7 @@ export default function ArabicTermsModal() {
         أوافق على سياسة الإستخدام وخصوصية البيانات
       </label>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className='sm:max-w-[600px] bg-white'>
+        <DialogContent className='sm:max-w-[900px] bg-white'>
           <DialogHeader className=' '>
             <DialogTitle className='text-right'>
               سياسة الإستخدام وخصوصية البيانات
@@ -56,20 +55,21 @@ export default function ArabicTermsModal() {
               يرجى قراءة سياسة الإستخدام وخصوصية البيانات
             </DialogDescription>
           </DialogHeader>
-          <ScrollArea className='h-[200px] w-full rounded-md border p-4 bg-white text-right'>
-            <h3 className='text-lg font-semibold'>١. مقدمة</h3>
+          <ScrollArea className='h-[500px] w-full rounded-md border p-4 bg-white text-right'>
+            <h3 className='text-lg font-semibold'>:١. مقدمة</h3>
             <p className='mt-2'>
               ترحب منصة "مسارات التعلم الذكي" بك، وتوفر لك خدماتها وفقًا للشروط
               والأحكام التالية. يرجى قراءة هذه السياسة بعناية قبل استخدام
               المنصة.
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>٢. قبول الشروط</h3>
+            <h3 className='text-lg font-semibold'>:٢. قبول الشروط</h3>
+
             <p className='mt-2'>
               أنت مسؤول عن ضمان أن جميع الأشخاص الذين يصلون إلى موقعنا من
               خلالباستخدامك للمنصة، فإنك توافق على الالتزام بسياسة الاستخدام هذه
               وكافة القوانين واللوائح المعمول بها.
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>٣. حساب المستخدم:</h3>
+            <h3 className='text-lg font-semibold'>:٣. حساب المستخدم</h3>
             <p className='mt-2'>
               التسجيل: قد يُطلب منك إنشاء حساب وتقديم معلومات دقيقة وكاملة.
             </p>
@@ -80,7 +80,7 @@ export default function ArabicTermsModal() {
             <p className='mt-2'>
               الإخطار: يجب عليك إخطارنا فورًا بأي استخدام غير مصرح به لحسابك
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>٤. استخدام المنصة:</h3>
+            <h3 className='text-lg font-semibold'>:٤. استخدام المنصة</h3>
             <p className='mt-2'>
               الاستخدام القانوني: توافق على استخدام المنصة لأغراض قانونية
               ومشروعة فقط.
@@ -94,9 +94,7 @@ export default function ArabicTermsModal() {
               التفاعل الاجتماعي: يجب عليك الالتزام بآداب السلوك عند المشاركة في
               المنتديات والمجتمعات الافتراضية.
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>
-              حقوق الملكية الفكرية:
-            </h3>
+            <h3 className='text-lg font-semibold'>:٥. حقوق الملكية الفكرية</h3>
             <p className='mt-2'>
               جميع المحتويات والمواد المتاحة على المنصة، بما في ذلك النصوص،
               الرسومات، الشعارات، والصور، هي ملك لمنصة "مسارات التعلم الذكي" أو
@@ -106,8 +104,8 @@ export default function ArabicTermsModal() {
               لا يجوز لك إعادة إنتاج أو توزيع أو تعديل أي جزء من المحتوى دون
               الحصول على إذن خطي مسبق.
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>
-              المحتوى الذي ينشئه المستخدم:
+            <h3 className='text-lg font-semibold'>
+              :٦. المحتوى الذي ينشئه المستخدم
             </h3>
             <p className='mt-2'>
               الترخيص: بمنحك المحتوى إلى المنصة، تمنحنا حقًا غير حصري، عالمي،
@@ -118,9 +116,7 @@ export default function ArabicTermsModal() {
               غير قانوني أو مسيء.
             </p>
 
-            <h3 className='mt-4 text-lg font-semibold'>
-              التعديلات على الخدمة:
-            </h3>
+            <h3 className='text-lg font-semibold'>:٧. التعديلات على الخدمة</h3>
             <p className='mt-2'>
               نحتفظ بالحق في تعديل أو إيقاف المنصة أو أي جزء منها في أي وقت دون
               إشعار مسبق.
@@ -130,7 +126,7 @@ export default function ArabicTermsModal() {
               إيقاف للخدمة.
             </p>
 
-            <h3 className='mt-4 text-lg font-semibold'>إنهاء الاستخدام:</h3>
+            <h3 className='text-lg font-semibold'>:٨. إنهاء الاستخدام</h3>
             <p className='mt-2'>
               يمكننا إنهاء أو تعليق وصولك إلى المنصة فورًا دون إشعار، إذا انتهكت
               هذه السياسة أو القوانين المعمول بها.
@@ -139,7 +135,7 @@ export default function ArabicTermsModal() {
               بعد الإنهاء، ستظل الشروط التي يجب بطبيعتها أن تستمر بعد الإنهاء
               سارية
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>إخلاء المسؤولية:</h3>
+            <h3 className='text-lg font-semibold'>:٩. إخلاء المسؤولية</h3>
             <p className='mt-2'>
               يتم توفير المنصة "كما هي" دون أي ضمانات من أي نوع. لا نضمن دقة أو
               اكتمال المحتوى أو أن الخدمة ستكون خالية من الأخطاء أو الانقطاعات.
@@ -147,13 +143,13 @@ export default function ArabicTermsModal() {
             <p className='mt-2'>
               لا نتحمل أي مسؤولية عن أي خسائر أو أضرار ناتجة عن استخدامك للمنصة.
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>تحديد المسؤولية:</h3>
+            <h3 className='text-lg font-semibold'>:١٠. تحديد المسؤولية</h3>
             <p className='mt-2'>
               لن نكون مسؤولين عن أي أضرار مباشرة أو غير مباشرة تنشأ عن استخدامك
               للمنصة، بما في ذلك فقدان البيانات أو الأرباح.
             </p>
 
-            <h3 className='mt-4 text-lg font-semibold'>جمع المعلومات:</h3>
+            <h3 className='text-lg font-semibold'>:١١. جمع المعلومات</h3>
             <p className='mt-2'>
               لمعلومات الشخصية: قد نقوم بجمع معلومات شخصية مثل الاسم، البريد
               الإلكتروني، رقم الهاتف، العمر، المستوى التعليمي، وغيرها من
@@ -167,7 +163,7 @@ export default function ArabicTermsModal() {
               البيانات التقنية: قد نجمع معلومات حول الجهاز المستخدم، عنوان IP،
               ونوع المتصفح، لأغراض تحسين المنصة.
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>استخدام المعلومات:</h3>
+            <h3 className='text-lg font-semibold'>:١٢. استخدام المعلومات</h3>
             <p className='mt-2'>
               تحسين تجربة التعلم: نستخدم البيانات لتخصيص المحتوى التعليمي وفقًا
               لاحتياجاتك وأسلوب تعلمك.
@@ -180,7 +176,7 @@ export default function ArabicTermsModal() {
               الأمان والتحقق: لضمان أمن حسابك والتحقق من هويتك عند الضرورة.
             </p>
 
-            <h3 className='mt-4 text-lg font-semibold'>مشاركة المعلومات:</h3>
+            <h3 className='text-lg font-semibold'>:١٣. مشاركة المعلومات</h3>
             <p className='mt-2'>
               الأطراف الثالثة: لا نقوم ببيع أو تأجير معلوماتك الشخصية لأطراف
               ثالثة. قد نشارك بعض البيانات مع شركائنا التعليميين لتحسين المحتوى
@@ -192,7 +188,7 @@ export default function ArabicTermsModal() {
               القانون أو بأمر من المحكمة.
             </p>
 
-            <h3 className='mt-4 text-lg font-semibold'>أمن المعلومات:</h3>
+            <h3 className='text-lg font-semibold'>:١٤. أمن المعلومات</h3>
             <p className='mt-2'>
               نستخدم إجراءات أمنية وتقنية لحماية معلوماتك من الوصول غير المصرح
               به، الاستخدام، أو الكشف.
@@ -202,7 +198,9 @@ export default function ArabicTermsModal() {
             </p>
 
             <h3 className='mt-4 text-lg font-semibold'>
-              ملفات تعريف الارتباط (Cookies):
+              <h3 className='text-lg font-semibold'>
+                :١٥. ملفات تعريف الارتباط (Cookies)
+              </h3>
             </h3>
             <p className='mt-2'>
               نستخدم ملفات تعريف الارتباط لتحسين وظائف المنصة وتخصيص تجربتك.
@@ -212,7 +210,7 @@ export default function ArabicTermsModal() {
               يؤثر ذلك على بعض ميزات المنصة
             </p>
 
-            <h3 className='mt-4 text-lg font-semibold'>حقوق المستخدم:</h3>
+            <h3 className='text-lg font-semibold'>:١٦. حقوق المستخدم</h3>
             <p className='mt-2'>
               تحسين تجربة التعلم: نستخدم البيانات لتخصيص المحتوى التعليمي وفقًا
               لاحتياجاتك وأسلوب تعلمك.الوصول والتصحيح: يمكنك الوصول إلى معلوماتك
@@ -225,27 +223,32 @@ export default function ArabicTermsModal() {
             <p className='mt-2'>
               الاعتراض: يمكنك الاعتراض على معالجة بياناتك الشخصية لأسباب مشروعة.
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>
-              الخدمات الخاصة بذوي الاحتياجات الخاصة:
+            <h3 className='text-lg font-semibold'>
+              :١٧. الخدمات الخاصة بذوي الاحتياجات الخاصة
             </h3>
             <p className='mt-2'>
               نلتزم بتوفير بيئة تعليمية شاملة ومناسبة للجميع، ونضمن سرية
               المعلومات المتعلقة بالاحتياجات الخاصة للمستخدمين.
             </p>
 
-            <h3 className='mt-4 text-lg font-semibold'>
-              التغييرات على السياسة:
+            <h3 className='text-lg font-semibold'>
+              :١٨. التغييرات على السياسة
             </h3>
             <p className='mt-2'>
               قد نقوم بتحديث سياسة الخصوصية من وقت لآخر. سيتم إشعارك بأي تغييرات
               مهمة.
             </p>
-            <h3 className='mt-4 text-lg font-semibold'>الاتصال بنا:</h3>
+            <h3 className='mt-4 text-lg font-semibold'> :الاتصال بنا</h3>
             <p className='mt-2'>
               إذا كان لديك أي استفسارات أو مخاوف بشأن سياسة الخصوصية، يرجى
               التواصل معنا عبر
             </p>
-            <p className=''>hallo@msaratedu.com</p>
+            <a
+              href='mailto:hallo@msaratedu.com'
+              className='text-primary-300 underline'
+            >
+              hallo@msaratedu.com
+            </a>
           </ScrollArea>
           <DialogFooter>
             <Button

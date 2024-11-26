@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { BASE_API_URL } from './../../../config';
 
 interface BootResponse {
     message: string;
@@ -78,7 +79,7 @@ const getMainChat = createAsyncThunk("mainChat/getMainChat", async ({ token, con
     try {
 
         if (phase === 1) {
-            const response = await axios.get<any>("http://127.0.0.1:8000/questions/vark_exam/", {
+            const response = await axios.get<any>(`${BASE_API_URL}/questions/vark_exam/`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -88,7 +89,7 @@ const getMainChat = createAsyncThunk("mainChat/getMainChat", async ({ token, con
             return data;
         }
         if (phase === 2) {
-            const response = await axios.post<any>("http://127.0.0.1:8000/cms/grade_survey/", { ...payloud, lesson_id: "6675eaf5-2d4c-458f-8bb3-9671ead1a1ab" }, {
+            const response = await axios.post<any>(`${BASE_API_URL}/cms/grade_survey/`, { ...payloud, lesson_id: "6675eaf5-2d4c-458f-8bb3-9671ead1a1ab" }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -97,7 +98,7 @@ const getMainChat = createAsyncThunk("mainChat/getMainChat", async ({ token, con
             localStorage.removeItem("second")
             return data;
         }
-        const response = await axios.post<any>("http://localhost:8000/chats/send_message/", { ...payloud, lesson_id: "6675eaf5-2d4c-458f-8bb3-9671ead1a1ab" }, {
+        const response = await axios.post<any>(`${BASE_API_URL}/chats/send_message/`, { ...payloud, lesson_id: "6675eaf5-2d4c-458f-8bb3-9671ead1a1ab" }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

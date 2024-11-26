@@ -1,5 +1,6 @@
 import { createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import { BASE_API_URL } from "../../../config";
 
 
 
@@ -8,19 +9,16 @@ const getSubjects = createAsyncThunk("subjects/getSubjects", async (token:any, t
 
   const { rejectWithValue } = thunkAPI
   try {
-    console.log(`${token} this form act Sub`)
-        const response = await axios.get<any>("http://localhost:8000/cms/subjects_with_lessons" , {headers:{
+        const response = await axios.get<any>(`${BASE_API_URL}/cms/subjects_with_lessons` , {headers:{
           Authorization: `Bearer ${token}`,
           Accept: "application/json"
       },
         });
 
     const data = response.data;
-    console.log(`${response} this form act data Sub`)
         return data;
     } catch (error) {
     if (axios.isAxiosError(error)) {
-        console.log(error)
         return rejectWithValue(error.message)
         } else
             return rejectWithValue("An Unexpected Error")

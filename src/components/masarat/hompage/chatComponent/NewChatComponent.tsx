@@ -8,7 +8,6 @@ import { getMainChat } from "../../../../store/mainChat/mainChatSlice";
 import getRestoreChat from "../../../../store/restoreMainChatt/act/actChatting";
 import { aiChatt } from "../../../../store/chattWithAi/chattAiSlice";
 import avatar from "../../../../images/userImage.jpg";
-import { Speech } from "react-speech";
 
 import {
   arrayToSend,
@@ -22,14 +21,6 @@ import { toggleModal } from "../../../../store/modalCollaps/ModalCollapseSlice";
 import { changeAcess } from "../../../../store/camerAcess/CamerAcsess";
 import Modal from "../../../common/modal/Modal";
 import { useNavigate } from "react-router-dom";
-
-type Message = {
-  [x: string]: any;
-  id?: string;
-  lesson?: string;
-  question_text?: string;
-  student_answer?: string;
-};
 
 export default function ChatComponent() {
   const dispatch = useAppDispatch();
@@ -101,20 +92,7 @@ export default function ChatComponent() {
     };
   }, []); // Make sure to include dependencies
 
-  // Restore chat on component mount
-  // useEffect(() => {
-  //   dispatch(getRestoreChat(token));
-  // }, [token]);
-
-  // Start main chat if no restored messages are present
-  // useEffect(() => {
-  //   if (initialMessages.length === 0) {
-  //     dispatch(getMainChat({ token, content: chatToSend }));
-  //   }
-  // }, [initialMessages]);
-
   // Initialize first question in chat
-  console.log(options);
   useEffect(() => {
     if (options?.length > 1) {
       setAllChat((prevMessages: any) => [
@@ -184,8 +162,6 @@ export default function ChatComponent() {
     }
   }, [content]);
 
-  console.log(allChat);
-  console.log(content);
   // Handle sending a new message
 
   useEffect(() => {
@@ -204,7 +180,6 @@ export default function ChatComponent() {
         window.speechSynthesis.speak(utterance);
       }
     }
-    console.log(aiResponse);
   }, [aiResponse]);
 
   const handleSendMessage = () => {
@@ -257,25 +232,6 @@ export default function ChatComponent() {
 
     const newMessage = { student_answer: processedAnswer };
 
-    // setSendChat((prev) => {
-    //   const updatedChat = [...prev];
-
-    //   // Update the last entry to include the student's answer
-    //   if (updatedChat.length > 0) {
-    //     updatedChat[updatedChat.length - 1] = {
-    //       ...updatedChat[updatedChat.length - 1],
-    //       student_answer: processedAnswer,
-    //     };
-    //   }
-
-    //   // Add a new entry for the next question, if there's a next question
-    //   if (currentMessage < content.length) {
-    //     const nextQuestion = content[currentMessage + 1];
-    //     updatedChat.push({ ...nextQuestion, student_answer: "" });
-    //   }
-
-    //   return updatedChat;
-    // });
     dispatch(updateLastEntry({ processedAnswer, content, currentMessage }));
 
     // Update allChat with the student's answer to the current question and add a new question if needed
@@ -372,7 +328,6 @@ export default function ChatComponent() {
     dispatch(resetChat());
     setCurrentMessage(0);
   };
-  console.log(sendedChat);
   return (
     <div
       className={`flex flex-col ${
@@ -460,7 +415,10 @@ export default function ChatComponent() {
                           (choice: any, ind: any) => {
                             const [key, value] = Object.entries(choice)[0];
                             return (
-                              <div className='bg-secondary-300 px-4 py-2  rounded-lg mx-auto my-2'>
+                              <div
+                                key={ind}
+                                className='bg-secondary-300 px-4 py-2  rounded-lg mx-auto my-2'
+                              >
                                 <span>
                                   {String(key)} :{String(value)}
                                 </span>
@@ -517,12 +475,7 @@ export default function ChatComponent() {
                   }
                 >
                   {/* {console.log(msg?.correcte)} undefined */}
-                  {console.log(
-                    "Value:",
-                    msg?.correct,
-                    "Type:",
-                    typeof msg?.correct
-                  )}
+
                   {msg?.correct ? (
                     <div className='font-bold w-fit bg-gray-300 p-2 rounded-lg'>
                       الإجابة الصحيحة :{msg?.correct}
@@ -588,7 +541,7 @@ export default function ChatComponent() {
                 const [key, value]: any = Object.entries(option)[0];
                 return (
                   <button
-                    key={ind}
+                    key={key}
                     className='bg-secondary-300 px-4 py-2  rounded-lg mx-auto my-2'
                     onClick={() => {
                       dispatch(getMainChat({ token, options: key }));
@@ -639,7 +592,11 @@ export default function ChatComponent() {
               onClick={start}
               disabled={sendingLoading === "pending"}
             >
-              {sendingLoading === "pending" ? <span>loading..</span> : "التالي"}
+              {sendingLoading === "pending" ? (
+                <div className='w-6 h-6 border-4 border-border-white border-t-transparent rounded-full animate-spin'></div>
+              ) : (
+                "التالي"
+              )}
             </button>
           ) : (
             ""
@@ -652,7 +609,11 @@ export default function ChatComponent() {
             hvr={"hover:bg-primary-200"}
             text={"text-white"}
           >
-            {aiLoading === "pending" ? <span>loading..</span> : <ArrowUp />}
+            {aiLoading === "pending" ? (
+              <div className='w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin'></div>
+            ) : (
+              <ArrowUp />
+            )}
           </MainButton>
         </div>
       </div>

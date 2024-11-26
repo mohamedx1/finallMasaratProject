@@ -3,8 +3,9 @@ import { Card } from "../ui/Card";
 import { Eye, Play, Menu, ExternalLink, Speaker, Layers2 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Reorder } from "framer-motion";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BASE_API_URL } from "../../config";
 
 const initialItems = [
   {
@@ -43,9 +44,8 @@ export default function Priorities() {
 
   const token = localStorage.getItem("token");
   const handelSubmit = async () => {
-    console.log(items[0]);
     await axios.post(
-      "http://127.0.0.1:8000/users/change-learning-type/",
+      `${BASE_API_URL}/users/change-learning-type/`,
       {
         learning_type: items[0].id,
       },

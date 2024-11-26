@@ -23,7 +23,6 @@ import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { changeAcess } from "../../../../store/camerAcess/CamerAcsess";
 import { useNavigate } from "react-router-dom";
 import { toggleaudio } from "../../../../store/modalCollaps/ModalCollapseSlice";
-import { Input } from "../../../ui/Input";
 
 export default function Settings() {
   const dispatch = useAppDispatch();

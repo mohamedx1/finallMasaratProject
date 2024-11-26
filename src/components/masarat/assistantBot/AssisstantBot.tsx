@@ -19,7 +19,6 @@ export default function AssisstantBot() {
     if (userStatues) {
       setAllResponseArray((prev) => {
         const updatedResponses = [...prev, userStatues];
-        console.log(updatedResponses);
 
         // Check every four responses
         if (updatedResponses.length >= 15) {

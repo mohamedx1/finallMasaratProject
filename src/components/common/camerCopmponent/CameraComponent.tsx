@@ -13,7 +13,6 @@ const VideoCapture: React.FC = () => {
   const [stream, Setstream] = useState<any>();
   const token = localStorage.getItem("token");
   const dispatch = useAppDispatch();
-  const { subjects } = useAppSelector((state) => state.subjects);
   useEffect(() => {
     const startWebcam = async () => {
       try {

@@ -32,12 +32,10 @@ const aiChatSlice = createSlice({
             state.aiResponse.answer = action.payload?.answer ?? "";
 
             state.aiResponse.audio_base64 = action.payload.audio_base64 ?? "";
-            console.log(action.payload);
         });
         builder.addCase(aiChatt.rejected, (state, action: any) => {
             state.isLoading = "failed";
             state.error = action.payload ?? "An error occurred";
-            console.log(action.payload);
         });
     },
 });

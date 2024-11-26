@@ -63,8 +63,7 @@ export default function Surviy({ questions }: any) {
         { role: "assistant", content: "Thank you for completing the survey!" },
       ]);
       setIsSurveyComplete(true);
-      // Here you would typically send the surveyData to your backend
-      console.log("Survey data:", surveyData);
+
     }
 
     setInput("");

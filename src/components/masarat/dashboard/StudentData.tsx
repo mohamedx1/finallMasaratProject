@@ -6,7 +6,6 @@ import {
   ChartTooltipContent,
 } from "../../ui/Chart";
 export default function StudentData({ charts }: any) {
-  console.log(charts);
   if (!charts) {
     return <div>Loading...</div>; // or any other loading state
   }
@@ -127,7 +126,6 @@ export default function StudentData({ charts }: any) {
   const totalValue: any = total_time_per_phaseKey
     .flat() // Flatten the array if needed
     .reduce((sum: any, currentValue) => sum + currentValue, 0); // Sum all values
-  console.log(charts);
   const hidingOut =
     "text-center font-semibold bg-primary-300 text-white w-fit my-4  rounded-2xl px-2 py-1 mx-auto";
   const hidingIn =

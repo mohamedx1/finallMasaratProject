@@ -28,14 +28,12 @@ const sendImageSlice = createSlice({
       state.isLoading = "succeeded";
       state.error = null;
       state.userStatues = action.payload;
-        console.log(action.payload)
 
     })
     builder.addCase(sendCapturedImage.rejected, (state , action) => {
       state.isLoading = "failed";
       if (action.payload && typeof action.payload  === "string"  ) {
         state.error = action.payload;
-        console.log(action)
       }
     })
   },

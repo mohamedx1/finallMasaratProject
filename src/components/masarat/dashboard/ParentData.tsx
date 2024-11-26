@@ -15,7 +15,7 @@ import {
   ChartTooltipContent,
 } from "../../ui/Chart";
 import { motion } from "framer-motion";
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 
 export default function ParentData({ charts }: { charts: any }) {
   const hidingOut =

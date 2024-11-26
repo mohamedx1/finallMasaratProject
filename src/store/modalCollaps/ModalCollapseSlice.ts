@@ -19,7 +19,6 @@ const modalaCollapsSlise = createSlice({
     },
     changeRools(state , action: PayloadAction<any>) {
       state.rols = action.payload
-      console.log(action.payload)
     }
   },
 });

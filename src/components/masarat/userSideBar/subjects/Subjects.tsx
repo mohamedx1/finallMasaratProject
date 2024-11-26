@@ -1,18 +1,16 @@
 import Lessons from "../lessonsNavLinks/Lessons";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { getSubjects } from "../../../../store/subjects/subjectsSlice";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { RingLoader } from "react-spinners";
 import { LockKeyhole } from "lucide-react";
 
 export default function Subjects() {
   const dispatch = useAppDispatch();
-  const [currentSubject, setCurrentSubject] = useState("");
   const { isLoading, subjects, error } = useAppSelector(
     (state) => state.subjects
   );
 
-  // const { token } = useAppSelector((state) => state.login);
   const token = localStorage.getItem("token");
   const { isExpended } = useAppSelector((state) => state.sideBar);
 
@@ -20,19 +18,11 @@ export default function Subjects() {
     dispatch(getSubjects(token));
   }, [token]);
 
-  const handelSelectSubject = (title: any) => {
-    if (currentSubject !== title) {
-      setCurrentSubject(title);
-    }
-  };
-
-  console.log(subjects);
   const Allsubjects =
     subjects.length > 0 ? (
-      subjects.map((sub) => (
-        <>
-          {console.log(sub.progress_percentage)}
-          <React.Fragment key={sub.id}>
+      subjects.map((sub, idx) => (
+        <React.Fragment key={idx}>
+          <React.Fragment>
             {sub.is_active === true ? (
               <div className={"mt-2.5"}>
                 <p
@@ -96,7 +86,7 @@ export default function Subjects() {
               </div>
             )}
           </React.Fragment>
-        </>
+        </React.Fragment>
       ))
     ) : (
       <div className={`mt-10 text-center ${isExpended ? "" : "hidden"}`}>

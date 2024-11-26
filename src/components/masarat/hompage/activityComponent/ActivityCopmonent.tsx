@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../../store/hooks";
 import { RootState } from "../../../../store/store";
 import AssisstantBot from "../../assistantBot/AssisstantBot";
 import { Button } from "../../../ui/Button";
@@ -12,6 +11,7 @@ import {
   TooltipTrigger,
 } from "../../../ui/Tooltip";
 import vid from "../../../../images/video.jpg";
+import { BASE_API_URL } from "../../../../config";
 interface VideoContent {
   id: string;
   content_type: string;
@@ -28,14 +28,11 @@ interface DynamicContent {
   };
 }
 
-type Content = VideoContent | DynamicContent;
-
 export default function ActivityComponent() {
   const [currentVideo, setCurrentVideo] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const { content } = useAppSelector((state: RootState) => state.chatting);
-  const sendedChat = useSelector((state: RootState) => state.chat.sendedChat);
 
   const handleVideoChange = (index: number) => {
     setCurrentVideo(index);
@@ -127,7 +124,7 @@ export default function ActivityComponent() {
 
           <video
             ref={(el) => (videoRefs.current[currentVideo] = el)}
-            src={`http://127.0.0.1:8000${videoContent[currentVideo]?.video_contents?.url}`}
+            src={BASE_API_URL + videoContent[currentVideo]?.video_contents?.url}
             controls
             className='w-full aspect-video object-contain'
             autoFocus
@@ -142,7 +139,7 @@ export default function ActivityComponent() {
       <iframe
         className='w-full h-full'
         title='Dynamic Content'
-        src={`http://127.0.0.1:8000${dynamicContent.dynamic_contents.url}`}
+        src={BASE_API_URL + dynamicContent.dynamic_contents.url}
         frameBorder='0'
       />
     </Card>

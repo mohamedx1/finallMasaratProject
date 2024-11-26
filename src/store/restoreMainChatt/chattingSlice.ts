@@ -99,18 +99,15 @@ const restoreMainChatSlice = createSlice({
         builder.addCase(getRestoreChat.pending, (state) => {
             state.isLoading = "pending";
             state.error = null;
-            console.log("loading");
         });
         builder.addCase(getRestoreChat.fulfilled, (state, action: any) => {
             state.isLoading = "succeeded";
             state.error = null;
             state.messages = action.payload.messages;
-            console.log(action.payload.messages);
         });
         builder.addCase(getRestoreChat.rejected, (state, action: any) => {
             state.isLoading = "failed";
             state.error = action.payload ?? "An error occurred";
-            console.log(action.payload);
         });
     },
 });

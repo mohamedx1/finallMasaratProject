@@ -22,7 +22,6 @@ export default function Mainbutn({
   disabled?: any;
   onClick?: () => void;
 }) {
-  console.log(pading);
   return (
     <button
       className={` rounded-lg ${pading} ${bg} ${hvr} ${text} ${border} transition   `}

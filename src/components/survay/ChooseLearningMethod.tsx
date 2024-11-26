@@ -1,19 +1,8 @@
 import { useEffect, useState } from "react";
 import { Card } from "../ui/Card";
-import {
-  Eye,
-  Instagram,
-  Network,
-  Play,
-  Menu,
-  Share,
-  ExternalLink,
-  Zap,
-  Command,
-  Layers2,
-} from "lucide-react";
+import { ExternalLink, Zap, Command, Layers2 } from "lucide-react";
 import { Button } from "../ui/Button";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initialItems = [
   {
@@ -53,7 +42,7 @@ export default function ChooseLearningMethod() {
     if (selectedContent.id === 2) {
       //   <Navigate to={"/masarat/survay/priorities"} />;
       navigate("/masarat/survay/priorities");
-      console.log(selectedContent.id, initialItems[2].id);
+
       return;
     }
 

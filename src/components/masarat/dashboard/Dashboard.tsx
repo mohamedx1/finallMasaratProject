@@ -6,7 +6,7 @@ import StudentData from "./StudentData";
 import ParentData from "./ParentData";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { BASE_API_URL } from "../../../config";
 export default function Dashboard() {
   const [IsParent, setIsparent] = useState(false);
   const token = localStorage.getItem("token");
@@ -14,18 +14,12 @@ export default function Dashboard() {
   const [isError, setIsError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [chartData, setChartData] = useState(null);
-  // const handelclikparentButton: any = async () => {
-  //   // setIsparent(true);
-  //   await getDahBoradData();
-  // };
-  // const handelclikStudenttButton: any = () => {
-  //   setIsparent(false);
-  // };
+
 
   const getDashboardData = async () => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/users/student-dashboard/",
+        `${BASE_API_URL}/users/student-dashboard/`,
         { parent_password: password },
         {
           headers: { Authorization: `Bearer ${token}` },

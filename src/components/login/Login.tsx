@@ -9,7 +9,7 @@ import { Toaster } from "../ui/toaster";
 import { CircleAlert, Eye, EyeOff } from "lucide-react";
 import ArabicTermsModal from "./ArabicTermsModal";
 import { useAppSelector } from "../../store/hooks";
-
+import { BASE_API_URL } from "../../config";
 export default function Login() {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
@@ -26,14 +26,10 @@ export default function Login() {
 
   async function login() {
     try {
-      const response = await axios.post<any>(
-        "http://127.0.0.1:8000/users/login/",
-        {
-          username: userName,
-          password: password,
-        }
-      );
-      console.log(response);
+      const response = await axios.post<any>(`${BASE_API_URL}/users/login/`, {
+        username: userName,
+        password: password,
+      });
       if (response.status === 200) {
         localStorage.setItem("token", response.data.access);
         localStorage.setItem("fTime", response.data.first_time_login);

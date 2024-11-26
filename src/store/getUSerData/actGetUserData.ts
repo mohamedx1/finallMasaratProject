@@ -1,12 +1,13 @@
 import { createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import { BASE_API_URL } from "../../config";
 
 
 const getUserData = createAsyncThunk("uaerData/getUserData", async (_, thunkAPI) => {
     const token = localStorage.getItem("token")
     const {rejectWithValue} =thunkAPI
     try {
-        const response = await axios.get("http://127.0.0.1:8000/users/user/",
+        const response = await axios.get(`${BASE_API_URL}/users/user/`,
             {headers:{
           Authorization: `Bearer ${token}`,
           Accept: "application/json"
