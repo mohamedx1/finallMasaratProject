@@ -399,14 +399,14 @@ export default function ChatComponent() {
                       <BootChatAvatat emotion={0} />
                     </div>
                     <div className=' flex justify-between mt-4 w-4/5'>
-                      <div
-                        className={`max-w-xs md:max-w-md px-4 py-2 rounded-l bg-transparent text-gray-800 flex flex-col `}
+                      <pre
+                        className={`max-w-xs md:max-w-md px-4 py-2 rounded-l bg-transparent text-gray-800 flex flex-col    `}
                       >
                         {msg?.question_text ||
                           msg?.content?.question_text ||
                           msg?.answer ||
                           msg?.content?.answer}
-                      </div>
+                      </pre>
                     </div>
                   </div>
                   <div className='flex gap-2'>
@@ -483,8 +483,7 @@ export default function ChatComponent() {
                   ) : (
                     ""
                   )}
-
-                  {msg?.cause && msg?.correct ? msg?.cause : ""}
+                  <pre>{msg?.cause && msg?.correct ? msg?.cause : ""}</pre>
                 </div>
               ) : (
                 <div
@@ -495,42 +494,45 @@ export default function ChatComponent() {
                   }
                 >
                   {msg?.content?.mcq_question?.correct_answer ? (
-                    <div className=' font-bold w-fit bg-gray-300 p-2 rounded-lg'>
+                    <pre className=' font-bold w-fit bg-gray-300 p-2 rounded-lg'>
                       الإجابة الصحيحة :
                       {msg?.content?.mcq_question?.correct_answer}
-                    </div>
+                    </pre>
                   ) : (
                     ""
                   )}
+
                   {msg?.content?.true_false_question?.correct_answer ? (
-                    <div className='font-bold w-fit bg-gray-300 p-2 rounded-lg '>
+                    <pre className='font-bold w-fit bg-gray-300 p-2 rounded-lg '>
                       الإجابة الصحيحة :
                       {String(
                         msg?.content?.true_false_question?.correct_answer
                       ) === "true"
                         ? "صح"
                         : "خطأ"}
-                    </div>
+                    </pre>
                   ) : (
                     ""
                   )}
+
                   {msg?.content?.long_answer_question?.correct_answer ? (
-                    <div className='font-normal  w-52 bg-gray-300 p-2 rounded-lg'>
+                    <pre className='font-normal  w-52 bg-gray-300 p-2 rounded-lg'>
                       الإجابة الصحيحة :
                       {msg?.content?.long_answer_question?.correct_answer}
-                    </div>
+                    </pre>
                   ) : (
                     ""
                   )}
+
                   {msg?.content?.sorting_question?.correct_order ? (
-                    <div className='font-bold w-fit bg-gray-300 p-2 rounded-lg '>
+                    <pre className='font-bold w-fit bg-gray-300 p-2 rounded-lg '>
                       الإجابة الصحيحة :
                       {msg?.content?.sorting_question?.correct_order}
-                    </div>
+                    </pre>
                   ) : (
                     ""
                   )}
-                  {msg?.content?.cause}
+                  <pre>{msg?.content?.cause}</pre>
                 </div>
               )}
             </div>

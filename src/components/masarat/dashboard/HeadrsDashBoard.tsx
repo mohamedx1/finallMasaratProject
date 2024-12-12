@@ -11,9 +11,11 @@ import {
   DialogTrigger,
 } from "../../ui/dialog";
 import { Button } from "../../ui/Button";
+import { useAppSelector } from "../../../store/hooks";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 // import { Label } from "../../ui/label";
 export default function HeadrsDashBoard({
-  studentButton,
   IsParent,
   getDahBoradData,
   setPassword,
@@ -24,6 +26,12 @@ export default function HeadrsDashBoard({
   isOpen,
   setIsparent,
 }: any) {
+  const { first_name, last_name, student_profile } = useAppSelector(
+    (state) => state.userData
+  );
+
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await getDahBoradData();
@@ -37,8 +45,10 @@ export default function HeadrsDashBoard({
           <img src={userImage} alt='user' className='w-full rounded-full  ' />
         </div>
         <div>
-          <h1 className='font-semibold'>باسم مصباح سعيد</h1>
-          <p className='text-sm text-muted-foreground'>الثاني الاعدادي</p>
+          <h1 className='font-semibold'>{first_name + " " + last_name}</h1>
+          <p className='text-sm text-muted-foreground'>
+            {student_profile.academic_year}
+          </p>
         </div>
       </div>
       <div className='flex gap-2'>
@@ -103,6 +113,17 @@ export default function HeadrsDashBoard({
           } transition-all`}
         >
           طالب
+        </button>
+      </div>
+      <div>
+        <button
+          className='flex items-center'
+          onClick={() => {
+            navigate("/masarat/home");
+          }}
+        >
+          العودة للدرس
+          <ArrowLeft className='text-primary-300 ms-3' />
         </button>
       </div>
     </div>

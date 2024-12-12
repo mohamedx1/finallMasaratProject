@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../ui/use-toast";
 import { Toaster } from "../ui/toaster";
-import { CircleAlert, Eye, EyeOff } from "lucide-react";
+import { CircleAlert, Eye, EyeOff, UserRoundCheck } from "lucide-react";
 import ArabicTermsModal from "./ArabicTermsModal";
 import { useAppSelector } from "../../store/hooks";
 import { BASE_API_URL } from "../../config";
@@ -17,11 +17,30 @@ export default function Login() {
   const { toast } = useToast();
   const { rols } = useAppSelector((state) => state.togegleModal);
   //   const [, setUserName] = useState("");
+  const [errors, setErrors]: any = useState({});
+  localStorage.setItem("rols", String(rols));
+
+  const validate = () => {
+    const validationErrors: any = {};
+    if (!userName.trim()) {
+      validationErrors.userName = "من فضلك ادخل اسم المستخدم";
+    }
+    if (!password.trim()) {
+      validationErrors.password = "من فضلك ادخل كلمة المرور";
+    }
+    return validationErrors;
+  };
 
   const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login();
+    const validationErrors = validate();
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      await login();
+    } else {
+      // console.log("Validation failed", validationErrors);
+    }
   };
 
   async function login() {
@@ -33,9 +52,25 @@ export default function Login() {
       if (response.status === 200) {
         localStorage.setItem("token", response.data.access);
         localStorage.setItem("fTime", response.data.first_time_login);
+
         setUserName("");
         setPassword("");
-        navigate("/masarat/OnBording");
+        toast({
+          title: "تم تسجيل الدخول بنجاح",
+          description: "اهلا بك في منصة مسارات للتعلم الزكي  ",
+          icon: <UserRoundCheck className='text-green-500' />,
+        });
+        const ft = localStorage.getItem("fTime");
+        console.log(ft);
+        if (ft === "true") {
+          setTimeout(() => {
+            navigate("/masarat/OnBording");
+          }, 2000);
+        } else {
+          setTimeout(() => {
+            navigate("/masarat/home");
+          }, 2000);
+        }
       }
     } catch (err) {
       toast({
@@ -85,9 +120,16 @@ export default function Login() {
                 placeholder='اسم المستخدم'
                 type='text'
                 required
-                onChange={(e) => setUserName(e.target.value)}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                  setErrors({});
+                }}
               />
+              {errors.userName && (
+                <p className='text-red-500 text-sm'>{errors.userName}</p>
+              )}
             </div>
+
             <div className='space-y-2 relative'>
               <div
                 className='absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer'
@@ -105,15 +147,21 @@ export default function Login() {
                 placeholder='كلمة المرور'
                 type={show ? "text" : "password"}
                 required
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setErrors({});
+                }}
               />
+              {errors.password && (
+                <p className='text-red-500 text-sm'>{errors.password}</p>
+              )}
             </div>
           </div>
           <ArabicTermsModal />
           <Button
             className='w-full bg-primary-300 hover:bg-[#6D28D9] text-white '
             onClick={handleSubmit}
-            disabled={!rols}
+            disabled={!JSON.parse(rols)}
           >
             تسجيل الدخول
           </Button>

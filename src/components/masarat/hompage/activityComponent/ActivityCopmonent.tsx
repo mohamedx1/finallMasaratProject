@@ -71,11 +71,11 @@ export default function ActivityComponent() {
           {!isSingleVideo && (
             <div className='flex flex-col sm:flex-row justify-between items-center mt-4'>
               <Button
-                className='w-full sm:w-auto mt-2 sm:mt-0'
-                onClick={handleNextVideo}
-                disabled={currentVideo === videoContent.length - 1}
+                className='w-full sm:w-auto mb-2 sm:mb-0'
+                onClick={handlePreviousVideo}
+                disabled={currentVideo === 0}
               >
-                الفيديو التالي
+                الفيديو السابق
               </Button>
               <div className='flex gap-2 overflow-x-auto pb-4 max-w-full'>
                 {videoContent.map((video, index) => (
@@ -112,12 +112,13 @@ export default function ActivityComponent() {
                   </TooltipProvider>
                 ))}
               </div>
+
               <Button
-                className='w-full sm:w-auto mb-2 sm:mb-0'
-                onClick={handlePreviousVideo}
-                disabled={currentVideo === 0}
+                className='w-full sm:w-auto mt-2 sm:mt-0'
+                onClick={handleNextVideo}
+                disabled={currentVideo === videoContent.length - 1}
               >
-                الفيديو السابق
+                الفيديو التالي
               </Button>
             </div>
           )}

@@ -14,7 +14,10 @@ import { useAppDispatch } from "../../store/hooks";
 import { changeRools } from "../../store/modalCollaps/ModalCollapseSlice";
 
 export default function ArabicTermsModal() {
-  const [isChecked, setIsChecked] = useState(false);
+  const Getrols = localStorage.getItem("rols");
+  const rols = JSON.parse(Getrols);
+
+  const [isChecked, setIsChecked] = useState(rols);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   //   const { rols } = useAppSelector((state) => state.togegleModal);
@@ -23,7 +26,6 @@ export default function ArabicTermsModal() {
     setIsChecked(checked);
 
     if (checked) {
-      setIsOpen(true);
       dispatch(changeRools(true));
     } else {
       dispatch(changeRools(false));
@@ -39,11 +41,17 @@ export default function ArabicTermsModal() {
         required
         className='me-3'
       />
-      <label
-        htmlFor='terms'
-        className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-      >
-        أوافق على سياسة الإستخدام وخصوصية البيانات
+      <label className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 '>
+        أوافق على
+        <span
+          className='cursor-pointer text-primary-300 underline'
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          {" "}
+          سياسة الإستخدام وخصوصية البيانات
+        </span>
       </label>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className='sm:max-w-[900px] bg-white'>
@@ -255,10 +263,9 @@ export default function ArabicTermsModal() {
               className='bg-primary-300 text-white'
               onClick={() => {
                 setIsOpen(false);
-                dispatch(changeRools(true));
               }}
             >
-              أوافق
+              العودة
             </Button>
           </DialogFooter>
         </DialogContent>

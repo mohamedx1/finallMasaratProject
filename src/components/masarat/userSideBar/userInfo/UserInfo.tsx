@@ -7,7 +7,7 @@ import { AvatarProgress } from "./avatar-progress";
 
 export default function UserInfo() {
   const { isExpended } = useAppSelector((state) => state.sideBar);
-  const { first_name, last_name, student_profile, isLoading, error } =
+  const { first_name, last_name, student_profile, isLoading } =
     useAppSelector((state) => state.userData);
 
   return (

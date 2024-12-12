@@ -55,7 +55,7 @@ export default function AssisstantBot() {
     if (consecutiveUnavailable && audioIsOpend) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(
-        " يبدو أن الكاميرا تواجه مشكلة في قراءة تعابير الوجه. هل يمكك التحقق منها؟"
+        " يبدو أن الكاميرا تواجه مشكلة في قراءة تعابير الوجه. هل يمكنك التحقق منها؟"
       );
 
       utterance.lang = "ar"; // Set language to Arabic
@@ -72,16 +72,16 @@ export default function AssisstantBot() {
   }, [isConcentrated, consecutiveUnavailable]);
 
   return (
-    <div className='absolute w-32 bottom-2 left-6 z-30  '>
-      <div className='bg-primary-300 rounded-full p-2 '>
+    <div className='absolute w-20 bottom-2 left-6 z-30  '>
+      <div className='bg-primary-300 rounded-full p-1 '>
         <BootChatAvatat
           emotion={consecutiveUnavailable ? 0 : !isConcentrated ? 1 : 2}
         />
       </div>
-      <div className='flex justify-center -mt-5'>
+      <div className='flex justify-center -mt-3 '>
         <BootChatBody />
       </div>
-      <div className={`absolute top-0 left-40 p-2 w-60 shadow-lg bg-white `}>
+      <div className={`absolute top-0 left-24 p-2 w-60 shadow-lg bg-white `}>
         <span className='text-gray-700'>المساعد الآلي</span>
         <div className='text-center text-gray-500 flex flex-col'>
           {consecutiveUnavailable ? (
@@ -106,7 +106,7 @@ export default function AssisstantBot() {
                 setIsConcentrated(true); // Reset to concentrated
                 setConsecutiveUnavailable(false);
               }}
-              className='p-2 bg-primary-300 text-white rounded-2xl mt-2'
+              className='p-1 w-1/2 mx-auto bg-primary-300 text-white rounded-md mt-2'
             >
               استكمال الدرس
             </button>

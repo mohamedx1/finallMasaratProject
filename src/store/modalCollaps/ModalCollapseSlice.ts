@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 
-
+const rol = localStorage.getItem("rols")
 
 const modalaCollapsSlise = createSlice({
   name: 'camera',
   initialState: {
     ModalIsOpend: false, // Initial state is expanded (not collapsed)
     audioIsOpend: true,
-    rols:false,
+    rols:rol,
   },
   reducers: {
     toggleModal(state) {

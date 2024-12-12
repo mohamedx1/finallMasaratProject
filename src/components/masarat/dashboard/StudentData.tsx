@@ -17,17 +17,17 @@ export default function StudentData({ charts }: any) {
     total_time_per_phase: [
       {
         name: "تمهيد",
-        value: charts?.total_time_per_phase?.INTRO_CONTENT,
+        value: charts?.total_time_per_phase?.INTRO_CONTENT || 0,
         color: "#704FE6",
       },
       {
         name: "اختبار مبدأي",
-        value: charts?.total_time_per_phase?.INTRO_EXAM,
+        value: charts?.total_time_per_phase?.INTRO_EXAM || 0,
         color: "#9B84EE",
       },
       {
         name: "اختبار تمهيدي",
-        value: charts?.total_time_per_phase?.CONCEPTUAL_EXAM,
+        value: charts?.total_time_per_phase?.CONCEPTUAL_EXAM || 0,
         color: "#DEC8FE",
       },
       {
@@ -75,27 +75,27 @@ export default function StudentData({ charts }: any) {
       },
       {
         label: "تمهيد",
-        value: charts?.highest_scores_per_phase.INTRO_EXAM,
+        value: charts?.highest_scores_per_phase.CONCEPTUAL_EXAM || 0,
       },
       {
         label: "شرح",
-        value: charts?.highest_scores_per_phase.EXPLANATION_EXAM,
+        value: charts?.highest_scores_per_phase.EXPLANATION_EXAM || 0,
       },
       {
         label: "أمثله تطبيقيه",
-        value: charts?.highest_scores_per_phase.EXERCISES_EXAM,
+        value: charts?.highest_scores_per_phase.EXERCISES_EXAM || 0,
       },
       {
         label: "التدريبات",
-        value: charts?.highest_scores_per_phase.EXERCISES_EXAM,
+        value: charts?.highest_scores_per_phase.EXERCISES_EXAM || 0,
       },
       {
         label: "اسألة على الدروس السابقة",
-        value: charts?.highest_scores_per_phase.PREV_REVISION_EXAM,
+        value: charts?.highest_scores_per_phase.PREV_REVISION_EXAM || 0,
       },
       {
         label: "اختبار نهائي",
-        value: charts?.highest_scores_per_phase.FINAL_ASSESSMENT_EXAM,
+        value: charts?.highest_scores_per_phase.FINAL_ASSESSMENT_EXAM || 0,
       },
     ],
     topic_percentages: [
@@ -119,9 +119,10 @@ export default function StudentData({ charts }: any) {
     ],
   };
 
-  const total_time_per_phaseKey = charts?.total_time_per_phase
-    ? Object.values(charts?.total_time_per_phase) // No need for the extra array
-    : []; // Initialize as an empty array instead of an object
+  const total_time_per_phaseKey =
+    charts?.total_time_per_phase || 0
+      ? Object.values(charts?.total_time_per_phase) // No need for the extra array
+      : []; // Initialize as an empty array instead of an object
 
   const totalValue: any = total_time_per_phaseKey
     .flat() // Flatten the array if needed

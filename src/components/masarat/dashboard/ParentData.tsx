@@ -107,7 +107,7 @@ export default function ParentData({ charts }: { charts: any }) {
                 ?.correct_percentage,
           },
           {
-            subject: "صح و غلط",
+            subject: "صح و خطأ",
             value:
               charts?.questions_type_percentage?.TRUE_FALSE?.correct_percentage,
           },
@@ -154,11 +154,11 @@ export default function ParentData({ charts }: { charts: any }) {
               color: "hsl(var(--chart-2))",
             },
             committed: {
-              label: "ملتزم",
+              label: "منتبه",
               color: "hsl(var(--chart-1))",
             },
             notCommitted: {
-              label: "غير ملتزم",
+              label: "غير منتبه",
               color: "hsl(var(--chart-2))",
             },
           }}
@@ -283,24 +283,24 @@ export default function ParentData({ charts }: { charts: any }) {
           {renderPieChart(
             [
               {
-                name: "ملتزم",
+                name: "منتبه",
                 value:
                   charts?.concentration_percentage?.concentration_percentage ||
                   0,
               },
               {
-                name: "غير ملتزم",
+                name: "غير منتبه",
                 value:
                   100 -
                   (charts?.concentration_percentage?.concentration_percentage ||
                     0),
               },
             ],
-            "معدل الالتزام"
+            "معدل الإنتباه"
           )}
         </div>
       </div>
-      <h3 className={`${hidingOut} px-6`}>التغذية الرجعية للأسألة المقالية</h3>
+      <h3 className={`${hidingOut} px-6`}>التغذية الرجعية لاسألة مقالية</h3>
       <div className='container mx-auto p-6 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl shadow-lg'>
         <motion.table
           className='w-full border-collapse'
