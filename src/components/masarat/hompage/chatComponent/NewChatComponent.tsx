@@ -159,6 +159,12 @@ export default function ChatComponent() {
           },
         ])
       );
+      if (audioIsOpend) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(message);
+        utterance.lang = "ar"; // Set language to Arabic
+        window.speechSynthesis.speak(utterance);
+      }
     }
   }, [content]);
 
